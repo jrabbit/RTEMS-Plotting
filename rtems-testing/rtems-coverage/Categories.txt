@@ -1,0 +1,23 @@
+#
+#  $Id: Categories.txt,v 1.2 2010/06/21 18:33:06 jennifer Exp $
+#
+
+This is the list of Explanation Categories used when analyzing RTEMS
+Coverage report.  By using standard categories, the table filter on
+the web site works better.
+
+Simple Test Case
+
+Hard Test Tase
+
+Uncalled Routine
+
+Interrupt Critical Section
+
+Simple Error Case
+
+Hard Error Case
+
+Allocation Error
+
+Bharath Suri

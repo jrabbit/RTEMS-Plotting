@@ -1,0 +1,158 @@
+Index: arch/arm/common/armvirt.c
+===================================================================
+--- arch/arm/common/armvirt.c	(revision 560)
++++ arch/arm/common/armvirt.c	(working copy)
+@@ -141,7 +141,11 @@
+ {
+ 	fault_t fault;
+ 	fault = mmu_load_instr (state, address, instr);
++<<<<<<< .mine
++	
++=======
+ 	return fault;
++>>>>>>> .r560
+ 	//if (fault)
+ 	//      log_msg("load_instr fault = %d, address = %x\n", fault, address);
+ }
+@@ -266,6 +270,7 @@
+ 	if (skyeye_config.code_cov.prof_on)
+ 			cov_prof(EXEC_FLAG, address);
+ 
++
+ 	if ((isize == 2) && (address & 0x2)) {
+ 		ARMword lo, hi;
+ 		if (!(skyeye_cachetype == INSTCACHE))
+Index: utils/main/skyeye.c
+===================================================================
+--- utils/main/skyeye.c	(revision 560)
++++ utils/main/skyeye.c	(working copy)
+@@ -123,11 +123,15 @@
+ 		arch_instance->init ();
+ 		arch_instance->reset ();
+ 
+-
+ 		skyeye_uart_converter_setup();
++<<<<<<< .mine
+ 		if(skyeye_config.code_cov.prof_on)
+ 			cov_init(skyeye_config.code_cov.start, skyeye_config.code_cov.end);
++=======
++		if(skyeye_config.code_cov.prof_on)
++			cov_init(skyeye_config.code_cov.start, skyeye_config.code_cov.end);
+ 
++>>>>>>> .r560
+ 	}
+ 
+ 	return 1;
+@@ -555,9 +559,14 @@
+ /* 2007-01-31 disabled by Anthony Lee on BeOS for multi-thread safe. */
+ void sigint_handler (int signum)
+ {
++<<<<<<< .mine
++	cov_fini(skyeye_config.code_cov.prof_filename);
++=======
+ 	 if(skyeye_config.code_cov.prof_on)
+ 		cov_fini(skyeye_config.code_cov.prof_filename);
++>>>>>>> .r560
+ 	longjmp (ctrl_c_cleanup, 1);
++	/* do some cleanup */
+ }
+ #endif
+ 
+Index: utils/config/skyeye_config.h
+===================================================================
+--- utils/config/skyeye_config.h	(revision 589)
++++ utils/config/skyeye_config.h	(working copy)
+@@ -202,12 +202,12 @@
+ 
+ int do_log_option ();
+ int do_step_disassemble_option ();
+-//teawater add DBCT_TEST_SPEED 2005.10.04---------------------------------------
++
+ #ifdef DBCT_TEST_SPEED
+ int do_dbct_test_speed_sec();
+ #endif	//DBCT_TEST_SPEED
+-//AJ2D--------------------------------------------------------------------------
+ 
++int do_code_cov_option();
+ #define MAX_OPTION_NAME 32
+ #define MAX_PARAM_NAME  32
+ 
+@@ -246,8 +246,6 @@
+ 	//cpu_config_t *cpu;
+ 	machine_config_t *mach;
+ 	//mem_config_t mem;
+-//chy 2003-09-12, now support more io banks
+-//      ioaddr_config_t ioaddr; //used for ARMul_notIOaddr funciton
+ 	net_config_t net[NET_MAXNICNUM_PER_HOST];
+ 	uart_config_t uart;
+ 	log_config_t log;
+@@ -258,7 +256,7 @@
+ 
+ 	/*ksh 2004-11-26,energy profile flag */
+ 	energy_config_t energy;
+-
++	code_cov_t code_cov;
+ 	char config_file[MAX_FILE_NAME];
+ 	code_cov_t code_cov;
+ 
+Index: autom4te.cache/requests
+===================================================================
+--- autom4te.cache/requests	(revision 589)
++++ autom4te.cache/requests	(working copy)
+@@ -80,15 +80,15 @@
+                         'configure.in'
+                       ],
+                       {
++                        '_LT_AC_TAGCONFIG' => 1,
+                         'AM_PROG_F77_C_O' => 1,
+-                        '_LT_AC_TAGCONFIG' => 1,
++                        'AC_INIT' => 1,
+                         'm4_pattern_forbid' => 1,
+-                        'AC_INIT' => 1,
+                         'AC_CANONICAL_TARGET' => 1,
++                        'AC_SUBST' => 1,
+                         'AC_CONFIG_LIBOBJ_DIR' => 1,
+-                        'AC_SUBST' => 1,
++                        'AC_FC_SRCEXT' => 1,
+                         'AC_CANONICAL_HOST' => 1,
+-                        'AC_FC_SRCEXT' => 1,
+                         'AC_PROG_LIBTOOL' => 1,
+                         'AM_INIT_AUTOMAKE' => 1,
+                         'AC_CONFIG_SUBDIRS' => 1,
+@@ -96,8 +96,8 @@
+                         'LT_CONFIG_LTDL_DIR' => 1,
+                         'AC_REQUIRE_AUX_FILE' => 1,
+                         'AC_CONFIG_LINKS' => 1,
++                        'm4_sinclude' => 1,
+                         'LT_SUPPORTED_TAG' => 1,
+-                        'm4_sinclude' => 1,
+                         'AM_MAINTAINER_MODE' => 1,
+                         'AM_GNU_GETTEXT_INTL_SUBDIR' => 1,
+                         '_m4_warn' => 1,
+@@ -114,11 +114,11 @@
+                         'AH_OUTPUT' => 1,
+                         '_AM_SUBST_NOTMAKE' => 1,
+                         'AC_CONFIG_AUX_DIR' => 1,
++                        'sinclude' => 1,
++                        'm4_pattern_allow' => 1,
+                         'AM_PROG_CC_C_O' => 1,
+-                        'm4_pattern_allow' => 1,
+-                        'sinclude' => 1,
++                        'AC_CANONICAL_SYSTEM' => 1,
+                         'AM_CONDITIONAL' => 1,
+-                        'AC_CANONICAL_SYSTEM' => 1,
+                         'AC_CONFIG_HEADERS' => 1,
+                         'AC_DEFINE_TRACE_LITERAL' => 1,
+                         'm4_include' => 1,
+@@ -186,9 +186,9 @@
+                         'AM_SET_LEADING_DOT' => 1,
+                         'AM_SET_DEPDIR' => 1,
+                         '_AM_DEPENDENCIES' => 1,
++                        'm4_include' => 1,
++                        'PKG_PROG_PKG_CONFIG' => 1,
+                         'AM_PROG_INSTALL_SH' => 1,
+-                        'PKG_PROG_PKG_CONFIG' => 1,
+-                        'm4_include' => 1,
+                         'PKG_CHECK_MODULES' => 1,
+                         '_AC_AM_CONFIG_HEADER_HOOK' => 1,
+                         'AU_DEFUN' => 1,

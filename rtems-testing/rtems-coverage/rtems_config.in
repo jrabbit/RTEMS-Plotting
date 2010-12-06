@@ -1,0 +1,30 @@
+#
+#  COVOAR Template for RTEMS Coverage Analysis Runs
+#
+#  $Id: rtems_config.in,v 1.2 2010/05/21 20:14:30 jennifer Exp $
+#
+
+# This is the format of the trace or coverage files.
+format = @FORMAT@
+
+# This is the target we are analyzing.
+target = @TARGET@
+
+# This is the path to the explanations file.
+explanations = @EXPLANATIONS@
+
+# This is the path to the file which lists the symbols we want to analyze.
+symbolsFile = @SYMBOLS_FILE@
+
+# This is the name of the output directory.
+outputDirectory = @OUTPUT_DIRECTORY@
+
+# This is the extension on the coverage/trace files.
+coverageExtension = @COVERAGE_EXTENSION@
+
+# This is the extension on the executable files.
+executableExtension = @EXECUTABLE_EXTENSION@
+
+# This is the project name.
+projectName = @PROJECT_NAME@
+

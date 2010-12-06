@@ -1,0 +1,770 @@
+#! /bin/sh
+#
+#  Script to perform a single coverage test run on a single BSP
+#  in a specific configuration.  This script automates all steps
+#  of building RTEMS, running the tests, and generating the reports.
+#
+#  $Id: do_coverage,v 1.72 2010/08/04 13:35:20 joel Exp $
+#
+
+vfile=`dirname $0`/VERSIONS-COVERAGE
+if [ ! -r ${vfile} ] ; then
+  echo VERSIONS-COVERAGE file not found
+  exit 1
+fi
+
+source ${vfile}
+
+if [ ! -d ${BASEDIR} ] ; then
+  echo Have you set the BASEDIR in VERSIONS correctly?
+  exit 1
+fi
+
+progname=${0##*/}        # fast basename hack for ksh, bash
+
+USAGE="
+usage: $progname [ -opts ]
+        -v        -- verbose (default=no)
+        -d        -- analyze Core Configuration (default=yes)
+        -D        -- analyze Developmental Configuration (default=yes)
+        -A        -- Execute all steps (default=no)
+        -B BSP    -- Specify BSP to test
+        -P        -- Enable POSIX API (default=yes)
+        -S        -- Optimize for size (default=no)
+        -m        -- Update and build covMerge (default=no)
+        -u        -- Do CVS update on RTEMS (default=no)
+        -c        -- Configure RTEMS (default=no)
+        -b        -- Build RTEMS (default=no)
+        -C        -- get tests from build to test execution point (default=no)
+        -L        -- do not link files to test execution point (default=link)
+        -r        -- run the tests (default=no)
+        -R        -- generate reports (default=no)
+        -f        -- publish the results to ftp site (default=no)
+        -t        -- save the results locally (default=no)
+        -O        -- output directory (default=BSP-CONF-YYYYMMDD-HHMM)
+        -p        -- project name (default empty)
+
+Notes:  + There are currently NO checks at each step to determine if
+          the previous steps were performed!!!
+        + Use of each option toggles the setting.  For example, \"-v -v -A -u\"
+          results in verbose=no and all steps done except CVS update on RTEMS."
+
+#   log an error to stderr
+prerr()
+{
+    echo "$*" >&2
+}
+
+fatal() {
+    prerr "$USAGE"
+    [ "$1" ] && (prerr ; prerr $*);
+    exit 1
+}
+
+check_status()
+{
+  if [ $1 -ne 0 ] ; then
+    shift
+    echo "FAILED: " "$*" >&2
+    exit 1
+  fi
+}
+
+toggle()
+{
+  case $1 in
+    no)  echo "yes" ;;
+    yes) echo "no" ;;
+    *)   fatal "Unknown value to toggle ($1)" ;;
+  esac
+}
+
+# parse arguments for these
+verbose="no"
+do_all="no"
+do_posix="yes"
+do_optimize_size="no"
+do_covmerge="no"
+do_rtems_update="no"
+do_rtems_configure="no"
+do_rtems_build="no"
+do_copy_tests="no"
+do_link_tests="yes"
+do_run_tests="no"
+do_reports="no"
+do_publish="no"
+do_save_tarballs="no"
+do_core="yes"
+do_developmental="yes"
+outputDir=""
+BSP="not_set"
+
+while getopts vB:PSmAucbCLrRftO:dD OPT
+do
+    case "$OPT" in
+        A)
+          do_all="yes"
+          do_covmerge="yes"
+          do_posix="yes"
+          do_rtems_update="yes"
+          do_rtems_configure="yes"
+          do_rtems_build="yes"
+          do_copy_tests="yes"
+          do_run_tests="yes"
+          do_reports="yes"
+          ;;
+        d) do_core=`toggle ${do_core}` ;;
+        D) do_developmental=`toggle ${do_developmental}` ;;
+        B) BSP="${OPTARG}";;
+        O) outputDir="${OPTARG}";;
+        v) verbose=`toggle ${verbose}` ;;
+        m) do_covmerge=`toggle ${do_covmerge}` ;;
+        P) do_posix=`toggle ${do_posix}` ;;
+        S) do_optimize_size=`toggle ${do_optimize_size}` ;;
+        u) do_rtems_update=`toggle ${do_rtems_update}` ;;
+        c) do_rtems_configure=`toggle ${do_rtems_configure}` ;;
+        b) do_rtems_build=`toggle ${do_rtems_build}` ;;
+        C) do_copy_tests=`toggle ${do_copy_tests}` ;;
+        L) do_link_tests=`toggle ${do_link_tests}` ;;
+        r) do_run_tests=`toggle ${do_run_tests}` ;;
+        R) do_reports=`toggle ${do_reports}` ;;
+        f) do_publish=`toggle ${do_publish}` ;;
+        t) do_save_tarballs=`toggle ${do_save_tarballs}` ;;
+        *) fatal;;
+    esac
+done
+
+#  If we are to update or configure RTEMS, then we need to clean the
+#  RTEMS build tree up.
+do_clean="no"
+if [ ${do_rtems_update} = "yes" -o \
+     ${do_rtems_configure} = "yes" ] ; then
+  do_clean="yes"
+fi
+
+# allow bsp override
+if [ ${BSP} == "not_set" ] ; then
+  fatal "No BSP selected"
+fi
+
+# you can't publish unless ftp directory is accessible
+if [ ${do_publish} = "yes" ] ; then
+  if [ ! -d ${FTPDIR} ] ; then
+    fatal "Publishing results requested and ${FTPDIR} does not exist"
+  fi
+fi
+
+# For most BSPs, there is a script with the same name as the BSP.
+RUNNER=${BSP}
+
+RTEMSEXT=${DEFAULT_EXEEXT}
+COVEXT=cov
+case ${BSP} in
+  pc386)
+    CPU=i386
+    COVERAGE_FORMAT=QEMU
+    RTEMS_EXTRA_ARGS="USE_COM1_AS_CONSOLE=1"
+    RTEMS_EXTRA_ARGS="${RTEMS_EXTRA_ARGS} BSP_PRESS_KEY_FOR_RESET=0"
+    RTEMSEXT=exe
+    ;; 
+  uC5282)
+    CPU=m68k
+    COVERAGE_FORMAT=QEMU
+    RTEMSEXT=exe
+    COVEXT=tra
+    ;;
+  qemuppc)
+    RTEMSEXT=ralf
+    CPU=powerpc
+    COVERAGE_FORMAT=QEMU
+    ;;
+  lm32_evr)
+    CPU=lm32
+    COVERAGE_FORMAT=QEMU
+    RTEMSEXT=exe
+    COVEXT=tra
+    RUNNER=qemu-lm32_evr
+    RTEMS_EXTRA_ARGS="ON_SIMULATOR=1"
+    ;;
+  erc32|leon2|leon3)
+    CPU=sparc
+    COVERAGE_FORMAT=TSIM
+    ;;
+  edb7312|rtl22xx|gumstix|smdk2410)
+    CPU=arm
+    COVERAGE_FORMAT=Skyeye
+    RTEMS_EXTRA_ARGS="ON_SKYEYE=1"
+    ;;
+  *)
+    fatal "Unsupported BSP (${BSP}) for coverage analysis."
+    ;;
+esac
+
+if [ ${RTEMS_VERSION} = 4.6 -o ${RTEMS_VERSION} = 4.5 ] ; then
+  TARGET=${CPU}-rtems
+else
+  TARGET=${CPU}-rtems${RTEMS_VERSION}
+fi
+
+##### VERBOSE
+print_verbose()
+{
+  echo "BSP:                  " ${BSP}
+  echo "Target:               " ${TARGET}
+  echo "Compiler version:     " `${TARGET}-gcc --version  | grep gcc`
+  echo "do_optimize_size:     " ${do_optimize_size}
+  echo "Optimization Level:   " ${c_opt}
+  echo "POSIX Enabled:        " ${do_posix}
+  echo "Core Configuration    " ${do_core}
+  echo "Developmental Code:   " ${do_developmental}
+  echo "do_all:               " ${do_all}
+  echo "do_covmerge           " ${do_covmerge}
+  echo "do_rtems_update:      " ${do_rtems_update}
+  echo "do_rtems_configure:   " ${do_rtems_configure}
+  echo "do_rtems_build:       " ${do_rtems_build}
+  echo "do_copy_tests:        " ${do_copy_tests}
+  echo "do_link_tests:        " ${do_link_tests}
+  echo "do_run_tests:         " ${do_run_tests}
+  echo "do_reports:           " ${do_reports}
+  echo "do_publish:           " ${do_publish}
+  echo "do_save_tarballs:     " ${do_save_tarballs}
+  echo "Clean Before:         " ${do_clean}
+  echo "Executable Extension: " ${RTEMSEXT}
+  echo "Coverage Extension:   " ${COVEXT}
+}
+
+if [ ${do_optimize_size} = yes ] ; then
+ c_opt=-Os
+else
+ c_opt=-O2
+fi
+
+if [ ${do_core} = "no" -a ${do_developmental} = "no" ]; then
+  fatal "No symbol configurations to analyze selected"
+fi
+
+if [ ${verbose} = "yes" ] ; then
+  print_verbose
+fi
+
+# Basic error checking and sanity checking on the directory structure
+# and PATH
+if [ ! -d ${COVBASE} ] ; then
+  echo "The directory you specified for the base of the coverage run is "
+  echo "not present. (${COVBASE})"
+  exit 1
+fi
+
+if [ ! -d ${RTEMSDIR} ] ; then
+  echo "Check out RTEMS!!!"
+  exit 1
+fi
+
+type ${TARGET}-gcc
+check_status $? "Path appears to be broken"
+
+# Start real action
+NM=${TARGET}-nm
+type ${NM}
+check_status $? "Cannot find ${NM} on PATH"
+
+# Locate the custom file
+custom=${RTEMSDIR}/make/custom/${BSP}.cfg
+if [ ! -r ${custom} ] ; then
+  custom=`ls -1 \
+     ${RTEMSDIR}/c/src/lib/libbsp/${CPU}/*/make/custom/${BSP}.cfg 2>/dev/null`
+  check_status $? "unable to find a custom file"
+  if [ x${custom} = x -o ! -r ${custom} ] ; then
+    echo "Unable to read ${custom}"
+    exit 1
+  fi
+fi
+
+grep "^CFLAGS_OPTIMIZE_V.*=.*-O[s01234]" ${custom} >/dev/null
+if [ $? -ne 0 ] ; then
+  echo "Unable to find CFLAGS_OPTIMIZE_V in ${custom}"
+  exit 1
+fi
+
+EXTENSION=${c_opt}
+if [ ${do_posix} = yes ] ; then
+  EXTENSION=${EXTENSION}P
+else
+  EXTENSION=${EXTENSION}p
+fi
+
+year=`date +%Y`
+day=`date +%Y%m%d`
+hour=`date +%H`
+minute=`date +%M`
+
+echo "Testing ${TARGET}/${BSP} at optimization (${c_opt})"
+
+# print a data element in table
+print_element()
+{
+  echo "  <TD>"${*}"</TD>"
+}
+
+# generate table row of results in html
+generate_html()
+{
+  summary=$1
+  echo "<TR>"
+    print_element ${day}
+    print_element ${hour}:${minute}
+    print_element ${c_opt}
+    print_element ${do_posix}
+    print_element ${analyze_developmental}
+    print_element `grep "Uncovered range" ${summary} | cut -d ':' -f2`
+    print_element `grep "age Not Exec" ${summary} | cut -d ':' -f2`
+    print_element `grep "age Exec" ${summary} | cut -d ':' -f2`
+    print_element `grep "Bytes Not Exec" ${summary} | cut -d ':' -f2`
+    print_element `grep "Bytes Analyzed" ${summary} | cut -d ':' -f2`
+    print_element "<A HREF=\"${results_dir}\">untarred</A> " \
+                  "<A HREF=\"${results_dir}.tar.bz2\">tarball</A> "
+  echo "</TR>"
+}
+
+add_to_summary()
+{
+  unref=${results_dir}/sizes_unreferenced.txt 
+  echo
+  unreffed=`cat ${unref} | wc -l` 
+  echo "Symbols unreferenced: " ${unreffed}
+  if [ ${unreffed} = 0 ] ; then
+    size_of=0
+  else
+    size_of=`cut -f1 ${unref} | sed -e '2,$s/$/ +/' -e '$,$s/$/ p/' | dc`
+  fi
+  echo "Bytes in unreferenced symbols : " ${size_of}
+}
+
+generate_size_per_file()
+{
+  total=0
+  pfile=X
+  cut -d':' -f1 ${results_dir}/sizes_all.txt | sort  -k3 | while read line
+  do
+    size=`echo $line | cut -d' ' -f1`
+    file=`echo $line | cut -d' ' -f3`
+    #echo $size XXX $file
+    if [ $file != $pfile ] ; then
+      if [ $pfile != X ]; then
+	echo $total $pfile
+	total=0
+      fi
+      pfile=$file
+    fi
+    #echo ADD $file $total $size `expr $total + $size`
+    total=`expr $total + $size`
+  done | sort -n -r
+}
+
+# generate the coverage report set
+generate_reports()
+{
+  if [ $# -ne 3 ] ; then
+    echo Usage: ${0} TARGET BSP COVERAGE_FORMAT
+    exit 1
+  fi
+
+  TARGET=${1}
+  BSP=${2}
+  COVERAGE_FORMAT=${3}
+
+  cd ${BASEDIR}/${BSP}-tests/
+  check_status $? "cd ${BSP}-tests"
+
+  sed -e "s/@FORMAT@/${COVERAGE_FORMAT}/" \
+      -e "s/@TARGET@/${TARGET}/" \
+      -e "s,@EXPLANATIONS@,${COVBASE}/Explanations.txt," \
+      -e "s,@SYMBOLS_FILE@,${BASEDIR}/${BSP}-tests/rtems.syms," \
+      -e "s,@OUTPUT_DIRECTORY@,${results_dir}," \
+      -e "s/@EXECUTABLE_EXTENSION@/exe/" \
+      -e "s/@COVERAGE_EXTENSION@/${RTEMSEXT}.${COVEXT}/" \
+      -e "s/@PROJECT_NAME@/RTEMS ${RTEMS_VERSION}/" \
+      <${COVBASE}/rtems_config.in \
+      >${BASEDIR}/${BSP}-tests/config
+  check_status $? "Unable to generate COVOAR config file"
+
+  rm -rf ${results_dir}
+  mkdir  ${results_dir}
+  covoar -C ${BASEDIR}/${BSP}-tests/config \
+    *.exe
+  check_status $? "covoar failed"
+
+  # This should be made obsolete by sortable tables. 
+  #(echo "====== Largest Range Sizes (Size and Count)======" ; \
+  #  grep ^Size uncovered.txt | cut -d':' -f2 | sort -n | uniq -c | \
+  #     tail -15 | sed -e 's/ *\([0-9]*\) *\([0-9]*\)/\2 \1/' | sort -n -r | \
+  #     while read l; do printf "%6d %6d\n" $l; done ; \
+  #  echo "=====================================" ) >>summary.txt
+
+  check_endof >${results_dir}/testsWithNoEndOfTest.txt
+
+  # Generate the configuration settings file
+  (
+    echo "#"
+    echo "#  Settings for this coverage test run"
+    echo "#"
+    echo
+    print_verbose
+  ) >${results_dir}/configuration.txt
+
+  RTEMSLIB=${BASEDIR}/b-${BSP}/${TARGET}/${BSP}/lib/librtemscpu.a
+
+  if [ -r ${RTEMSLIB} ] ; then
+    while read symbol
+    do
+      line=`${TARGET}-nm --format=sysv \
+	${BASEDIR}/b-${BSP}/${TARGET}/${BSP}/lib/librtemscpu.a | \
+	grep FUNC | sed -e's/|/ | /g' | grep ${symbol}`
+      size=`echo ${line} | cut -d'|' -f5 | tr "[:lower:]" "[:upper:]"`
+      size=`echo 16 i ${size} p | dc`
+      echo "${size}	${symbol}	unknown"
+    done <${results_dir}/no_range_uncovered.txt | sort -n -r \
+         >${results_dir}/sizes_unreferenced.txt
+  fi
+
+  cat ${results_dir}/sizes_unreferenced.txt ${results_dir}/sizes.txt | \
+    sort -n -r >${results_dir}/sizes_all.txt
+
+  generate_size_per_file >${results_dir}/size_per_file.txt
+
+  generate_html ${results_dir}/summary.txt >${results_dir}/row.html
+  add_to_summary >>${results_dir}/summary.txt
+
+  cat ${results_dir}/summary.txt ${results_dir}/testsWithNoEndOfTest.txt
+
+  mv ${results_dir}/index.html ${results_dir}/index.html.tmp
+  sed -f ${COVBASE}/rtems_items.sed  \
+    <${results_dir}/index.html.tmp \
+    >${results_dir}/index.html 
+
+  # Now create the archive of information
+  cp ${COVOARBASE}/covoar.css ${COVOARBASE}/*gif ${COVOARBASE}/table.js ${results_dir}
+  echo "Results saved in ${results_dir}.tar.bz2"
+  tar cjf ${results_dir}.tar.bz2 ${results_dir}
+}
+
+# This grabs the list of methods from a library or object file
+filter_nm()
+{
+  for l in $*
+  do
+    if [ -r ${l} ] ; then
+      test ${verbose} = "yes" && echo Generating symbols from ${l} >&2
+      # echo "========= START $l"
+      ${TARGET}-nm --format=sysv $l | grep "FUNC|" | \
+        cut -d'|' -f1 | sed -e 's/ *$//'
+      # echo "========= END $l"
+    else
+      echo "${l} is not readable"
+    fi
+  done
+}
+
+# generate the list of symbols to analyze
+generate_symbols()
+{
+  if [ ${RTEMS_VERSION} = 4.6 -o ${RTEMS_VERSION} = 4.5 ] ; then
+    cd ${BASEDIR}/b-${BSP}/${TARGET}/c/${BSP}/exec
+    check_status $? "could not cd to object directory"
+
+    subd=o-optimize/
+  else
+    cd ${BASEDIR}/b-${BSP}/${TARGET}/c/${BSP}/cpukit
+    check_status $? "could not cd to object directory"
+
+    subd=
+  fi
+
+  if [ ${RTEMS_VERSION} = 4.5 ] ; then
+    filter_nm wrapup/rtems/o-optimize/librtems.a
+    if [ ${do_posix} = "yes" ] ; then
+      filter_nm wrapup/posix/o-optimize/libposix.a
+    fi
+
+    if [ ${analyze_developmental} = "yes" ] ; then
+      filter_nm ../lib/libc/${subd}libcsupport.a
+      filter_nm ../lib/libmisc/wrapup/${subd}libmisc.a
+    fi
+  else  # 4.6 or newer
+
+    # Base set of libraries to analyse.  Do NOT include libscorecpu.a!!!
+    filter_nm score/${subd}libscore.a
+    filter_nm sapi/${subd}libsapi.a
+    filter_nm rtems/${subd}librtems.a
+
+    # Now add the POSIX API onto that
+    if [ ${do_posix} = "yes" ] ; then
+      filter_nm posix/${subd}libposix.a
+    fi
+
+    # Now add developmental libraries
+    # NOTE: all non-network libraries are listed here.  --joel 5 March 2010
+    if [ ${analyze_developmental} = "yes" ] ; then
+      # filter_nm libfs/${subd}librfs.a
+      # filter_nm libfs/${subd}libdosfs.a
+      filter_nm libfs/${subd}libdevfs.a
+      filter_nm libfs/${subd}libimfs.a
+      filter_nm libcsupport/${subd}libcsupport.a
+      # filter_nm libi2c/${subd}libi2c.a
+      # filter_nm zlib/${subd}libz.a
+      # filter_nm libmd/${subd}libmd.a
+      # filter_nm libmisc/${subd}libshell.a
+      filter_nm libmisc/${subd}libbspcmdline.a
+      filter_nm libmisc/${subd}libcpuuse.a
+      # filter_nm libmisc/${subd}libuuid.a
+      filter_nm libmisc/${subd}libstackchk.a
+      # filter_nm libmisc/${subd}libmw-fb.a
+      # NEVER INCLUDE libdummy.a!!!
+      # filter_nm libmisc/${subd}libdummy.a
+      # filter_nm libmisc/${subd}libfsmount.a
+      filter_nm libmisc/${subd}libstringto.a
+      filter_nm libmisc/${subd}libdevnull.a
+      # filter_nm libmisc/${subd}libcapture.a
+      filter_nm libmisc/${subd}libdumpbuf.a
+      # filter_nm libmisc/${subd}libmonitor.a
+      # filter_nm libmisc/${subd}libserdbg.a
+      # filter_nm libmisc/${subd}libuntar.a
+      # filter_nm libblock/${subd}libblock.a
+    fi
+  fi
+}
+
+# remove symbols we do not want coverage on.
+# NOTE: As of 4 August 2010, we do not have any.
+remove_unwanted_symbols()
+{
+  cat
+#  sed -e '/IMFS_print_node/d' \
+#      -e '/IMFS_dump_directory/d' \
+#      -e '/IMFS_dump/d' \
+#      -e '/IMFS_memfile_maximum_size/d'
+}
+
+# Now we are ready to start doing real work
+start=`date`
+
+# If necessary, clean up the RTEMS build and test run directories
+if [ ${do_clean} = "yes" ] ; then
+  echo "Cleaning before building"
+  rm -rf ${BASEDIR}/b-${BSP}
+  rm -rf ${BASEDIR}/${BSP}-tests
+else
+  echo "Skipping clean before building"
+fi
+
+# If they don't exist, create the RTEMS build and test run directories
+test -d ${BASEDIR}/b-${BSP}     || mkdir ${BASEDIR}/b-${BSP}
+test -d ${BASEDIR}/${BSP}-tests || mkdir ${BASEDIR}/${BSP}-tests
+
+# If requested, update and build the coverage support tools
+if [ ${do_covmerge} = "yes" ] ; then
+  echo "Updating and building covmerge..."
+
+  cd ${COVBASE}/../covoar
+  check_status $? "cd covmerge"
+
+  cvs up -Pd 2>&1 | grep -v ^cvs
+  make clean all
+  check_status $? "build covmerge"
+
+  make
+  check_status $? "make covmerge"
+else
+  echo "Skipping Updating and building covmerge..."
+fi
+
+# If requested, update the RTEMS tree
+if [ ${do_rtems_update} = "yes" ] ; then
+  echo "Updating RTEMS ..."
+  cd ${RTEMSDIR}
+  check_status $? "cd rtems"
+
+  cvs up -Pd 2>&1 | grep -v ^cvs
+  ./bootstrap -c
+  ./bootstrap
+else
+  echo "Skipping Updating RTEMS ..."
+fi
+
+# If requested, configure RTEMS
+if [ ${do_rtems_configure} = "yes" ] ; then
+  # Now let's patch the make/custom file
+  sed -e "s/-O[0123s]/${c_opt}/" <${custom} >${custom}.tmp
+  mv ${custom}.tmp ${custom}
+
+  echo "Configuring RTEMS..."
+  rm -rf ${BASEDIR}/b-${BSP}/
+  mkdir ${BASEDIR}/b-${BSP}/
+  cd ${BASEDIR}/b-${BSP}/
+  check_status $? "cd b-${BSP}"
+
+  ##################
+  ################## WARNING!!!!!!
+  ##################
+  ################## BE CAREFUL ABOUT THIS CONFIGURE COMMAND.  IT IS
+  ################## VERY SPECIFIC TO COVERAGE TESTING
+  ##################
+  if [ ${do_posix} = "yes" ] ; then
+    posix_en=en
+  else
+    posix_en=dis
+  fi
+
+  if [ ${RTEMS_VERSION} = 4.5 ] ; then
+    ${RTEMSDIR}/configure \
+      --target=${TARGET} --enable-rtemsbsp=${BSP} \
+      --enable-maintainer-mode \
+      --disable-itron --${posix_en}able-posix --enable-tests \
+      --disable-networking --disable-ada --disable-cxx \
+      --prefix=${BASEDIR}/coverage/install >c.log 2>&1
+  else
+    ${RTEMSDIR}/configure NDEBUG=1 \
+      RTEMS_DO_NOT_INLINE_THREAD_ENABLE_DISPATCH=1 \
+      RTEMS_DO_NOT_INLINE_CORE_MUTEX_SEIZE=1 \
+      RTEMS_DO_NOT_UNROLL_THREADQ_ENQUEUE_PRIORITY=1 \
+      ${RTEMS_EXTRA_ARGS} \
+      --target=${TARGET} --enable-rtemsbsp=${BSP} \
+      --enable-maintainer-mode \
+      --disable-itron --${posix_en}able-posix --enable-tests \
+      --disable-networking --disable-ada --disable-cxx \
+      --prefix=${BASEDIR}/coverage/install >c.log 2>&1
+  fi
+  check_status $? "configuring RTEMS for ${BSP}"
+else
+  echo "Skipping Configuring RTEMS ..."
+fi
+
+# If requested, build RTEMS
+if [ ${do_rtems_build} = "yes" ] ; then
+  echo "Building RTEMS..."
+
+  cd ${BASEDIR}/b-${BSP}/
+  check_status $? "cd b-${BSP}"
+
+  if [ ${RTEMS_VERSION} = 4.6 -o ${RTEMS_VERSION} = 4.5 ] ; then
+    sleep 5  # 4.5 on chroot'ed env needs this for some reason
+    make >b.log 2>&1
+  else
+    cpus=`/usr/bin/getconf _NPROCESSORS_ONLN`
+    make -j${cpus} >b.log 2>&1
+  fi
+  check_status $? "Building RTEMS for ${BSP}"
+else
+  echo "Skipping Building RTEMS ..."
+fi
+
+# If requested, copy the tests from the build tree to the run tree
+if [ ${do_copy_tests} = "yes" ] ; then
+  echo "Copying tests..."
+
+  # clean destination
+  rm -rf ${BASEDIR}/${BSP}-tests/*
+  check_status $? "clean test directory"
+
+  cd ${BASEDIR}/b-${BSP}/
+  check_status $? "cd b-${BSP}"
+
+  find `pwd` -name "*.ralf" -o -name "*.exe" | while read f
+  do
+    rm -f ../${BSP}-tests/`basename ${f}`
+    if [ ${do_link_tests} = "yes" ] ; then 
+      ln -s ${f} ../${BSP}-tests
+    else
+      cp ${f} ../${BSP}-tests
+    fi
+  done
+  
+else
+  echo "Skipping copying tests..."
+fi
+
+# If requested, run the tests with coverage reporting enabled
+if [ ${do_run_tests} = "yes" ] ; then
+  echo "Running tests..."
+  cd ${BASEDIR}/${BSP}-tests/
+  check_status $? "cd ${BSP}-tests"
+
+  time ${RUNNER} -c *.${RTEMSEXT}
+else
+  echo "Skipping Running tests..."
+fi
+
+# If requested, generate the coverage reports
+if [ ${do_reports} = "yes" ] ; then
+  echo "Generating reports..."
+
+  cd ${BASEDIR}/${BSP}-tests/
+  check_status $? "cd ${BSP}-tests"
+
+  to_analyze=""
+  if [ ${do_core} = "yes" ] ; then
+    to_analyze="${to_analyze} no"
+  fi
+  if [ ${do_developmental} = "yes" ]; then
+    to_analyze="${to_analyze} yes"
+  fi
+
+  for analyze_developmental in ${to_analyze}
+  do
+    if [ ${analyze_developmental} = yes ] ; then
+      echo "Processing coverage for developmental configuration ..."
+      EXT=${EXTENSION}D
+    else
+      echo "Processing coverage for core source configuration ..."
+      EXT=${EXTENSION}d
+    fi
+    if [ "X${outputDir}" = "X" ] ; then
+      results_dir=${BSP}${EXT}-${day}-${hour}${minute}
+    else
+      results_dir=${outputDir}
+    fi
+
+    generate_symbols | remove_unwanted_symbols \
+      >${BASEDIR}/${BSP}-tests/rtems.syms
+    syms=`cat ${BASEDIR}/${BSP}-tests/rtems.syms | wc -l`
+    if [ ${syms} -eq 0 ] ; then
+      fatal "no symbols found"
+    fi
+
+    generate_reports ${TARGET} ${BSP} ${COVERAGE_FORMAT}
+  done
+else
+  echo "Skipping Generating reports..."
+fi
+
+# If requested, publish the coverage reports
+if [ ${do_publish} = "yes" -o ${do_save_tarballs} = "yes" ] ; then
+  if [ -d ${BASEDIR}/${BSP}-tests ] ; then
+    cd ${BASEDIR}/${BSP}-tests/
+    if [ ${do_publish} = "yes" ] ; then
+      cp ${BSP}${EXTENSION}[dD]-${day}-${hour}${minute}.tar.bz2 ${FTPDIR}
+      check_status $? "cp ${BSP} results to ftp site failed"
+      ${COVBASE}/generate_coverage_html ${FTPDIR}
+    fi
+    if [ ${do_save_tarballs} = "yes" ] ; then
+      if [ ! -d ${TARDIR} ] ; then
+         echo "Creating ${TARDIR}"
+         mkdir -p ${TARDIR}
+         check_status $? "Failed to mkdir ${TARDIR}"
+      fi
+      cp ${BSP}${EXTENSION}[dD]-${day}-${hour}${minute}.tar.bz2 ${TARDIR}
+      check_status $? "cp ${BSP} results to save directory"
+    fi
+  else
+    echo "No results to publish or save"
+  fi
+else
+  echo "Skipping Publishing reports..."
+fi
+stop=`date`
+
+echo "Started: " ${start}
+echo "Stopped: " ${stop}
+
+exit 0
+

@@ -1,0 +1,183 @@
+#! /bin/bash
+#
+#  Script to help running coverage profiles
+#
+#  $Id: run_coverage,v 1.12 2010/04/18 22:03:18 joel Exp $
+#
+
+vfile=`dirname $0`/VERSIONS-COVERAGE
+if [ ! -r ${vfile} ] ; then
+  echo VERSIONS-COVERAGE file not found
+  exit 1
+fi
+
+source ${vfile}
+
+if [ ! -d ${BASEDIR} ] ; then
+  echo Have you set the BASEDIR in VERSIONS correctly?
+  exit 1
+fi
+
+progname=${0##*/}        # fast basename hack for ksh, bash
+
+USAGE=\
+"usage: $progname [ -opts ] cmd [ more cmds]
+        -t        -- publish the results to ftp site (default=no)
+        -f        -- save the results locally (default=no)
+	-v	   -- verbose
+
+where cmds are:
+  update          - to update the RTEMS and Test Support source
+  BSP_TESTSET     - to perform TESTSET on BSP
+                    TESTSET may be baseline, O2, or Os
+"
+
+#   log an error to stderr
+prerr()
+{
+    echo "$*" >&2
+}
+
+fatal() {
+    prerr "$USAGE"
+    [ "$1" ] && (prerr ; prerr $*);
+    exit 1
+}
+
+warn() {
+    [ "$1" ] && prerr $*
+}
+
+check_status()
+{
+  if [ $1 -ne 0 ] ; then
+    shift 
+    echo "FAILED: " "$*" >&2
+    exit 1
+  fi
+}
+
+toggle()
+{
+  case $1 in
+    no)  echo "yes" ;;
+    yes) echo "no" ;;
+    *)   fatal "Unknown value to toggle ($1)" ;;
+  esac
+}
+
+do_one()
+{
+  bsp=${1}
+  shift
+  time ${COVBASE}/do_coverage -A -u -m ${SAVE} ${PUBLISH} ${*} -B ${bsp}
+  check_status $? "FAILED ${bsp}" 
+  rm -rf b-* *-tests
+}
+
+validate_bsp()
+{
+  case ${1} in
+    edb7312|gumstix|smdk2410)    ;; # ARM
+    pc386|qemu)                  ;; # i386
+    lm32_evr)                    ;; # lm32
+    uC5282)                      ;; # m68k/Coldfire
+    qemuppc)                     ;; # PowerPC
+    erc32|leon2|leon3)           ;; # SPARC
+    *)
+      echo "ERROR - does BSP (${bsp}) really exist and support coverage?"
+      exit 1
+  esac
+}
+
+verbose="no"
+do_publish="no"
+do_save_tarballs="no"
+
+while getopts ftv OPT
+do
+
+    case "$OPT" in
+      f) do_publish=`toggle ${do_publish}` ;;
+      t) do_save_tarballs=`toggle ${do_save_tarballs}` ;;
+      v) verbose=`toggle ${verbose}` ;;
+      *) fatal;;
+    esac
+done
+
+# Set the publish and save options
+if [ ${do_publish} = "yes" ] ; then
+  PUBLISH="-f"
+fi
+if [ ${do_save_tarballs} = "yes" ] ; then
+  SAVE="-t"
+fi
+
+shiftcount=`expr $OPTIND - 1`
+shift $shiftcount
+
+args=$*
+
+if [ $# -eq 0 ] ; then
+  echo "No actions requested"
+  exit 0
+fi
+
+for cmd in $*
+do
+  case ${cmd} in
+    update) ;;                       # general command
+    *_Os|*_O2|*_baseline)            # one BSP at specific -Ox level
+      case ${cmd} in
+        lm32_evr*) bsp=lm32_evr ;;
+        *)         bsp=`echo $cmd | sed -e 's/_.*$//'` ;;
+      esac
+      validate_bsp ${bsp}
+      ;;
+    *)
+      echo "Unknown command (${cmd})"
+      exit 1
+      ;;
+  esac
+done
+
+START=`date`
+
+cd ${BASEDIR}
+
+RESULTSDIR=${BASEDIR}/covrun-results
+test -d ${RESULTSDIR} || mkdir -p ${RESULTSDIR}
+for cmd in $*
+do
+  case ${cmd} in
+    update) 
+      time ${COVBASE}/do_coverage -u -m -B erc32
+      ;;
+    *_O[s2])
+      bsp=`echo $cmd | sed -e 's/_O.$//'`
+      Olevel=`echo $cmd | sed -e 's/.*_O\(.\)$/\1/'`
+      case ${Olevel} in
+        2)    do_one ${bsp} ;;
+        [sS]) do_one ${bsp} -S ;;
+        *)    echo ERROR unknown optimization level ; exit 1 ;;
+      esac
+      ;;
+    *_baseline) 
+      bsp=`echo $cmd | sed -e 's/_baseline$//'`
+      do_one ${bsp} -S          # -Os / POSIX enabled  / regression
+      do_one ${bsp} -S -P       # -Os / POSIX disabled / regression
+      do_one ${bsp}             # -O2 / POSIX enabled  / regression
+      do_one ${bsp}    -P       # -O2 / POSIX disabled  / regression
+      ;;
+    *)
+      echo "Unknown command (${cmd})"
+      exit 1
+      ;;
+  esac
+done
+
+STOP=`date`
+echo "STARTED AT: " ${START}
+echo "STOPPED AT: " ${STOP}
+
+exit 0

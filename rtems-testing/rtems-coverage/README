@@ -1,0 +1,46 @@
+#
+#  $Id: README,v 1.3 2009/03/19 17:33:45 joel Exp $
+#
+
+The script do_coverage now is a living README.  Please see it for
+procedural information.  It can perform all steps.  You should only
+have to edit VERSIONS-COVERAGE to tailor to your local installation
+and run
+
+./do_coverage -?
+
+to get some further advice.  The script catches common errors
+and deals with as much as possible.
+
+The report ends up in your test directory (${BSP}-tests).
+
+SPARC/ERC32 Information
+=======================
+Generated using the professional version of tsim.
+
+ARM/EDB7312 Information
+=======================
+Using skyeye 1.2.6 with profiling patch in this directory.
+
+Some tests lock up on skyeye which do not on other BSPs.
+
+
+====================== By hand information 
+
+Example invocations:
+
+./covmerge -v -l 0x40000000 -h 0x40000100 -T sparc-rtems4.10 \
+   -e test_input/hello.exe test_input/hello.cov
+
+./covmerge -v -l 0x40000000 -h 0x40000100 -m merged.cov test_input/*.cov
+
+=============== Sample Build of RTEMS =================
+
+../rtems/configure NDEBUG=1 \
+   RTEMS_DO_NOT_INLINE_THREAD_ENABLE_DISPATCH=1 \
+   RTEMS_DO_NOT_INLINE_CORE_MUTEX_SEIZE=1 \
+  --target=sparc-rtems4.10 --enable-rtemsbsp=erc32 \
+  --enable-maintainer-mode \
+  --disable-itron --enable-tests --disable-tcpip --disable-ada --disable-cxx \
+  --prefix=${HOME}/coverage/install && make -j4 && exit 0
+exit 1

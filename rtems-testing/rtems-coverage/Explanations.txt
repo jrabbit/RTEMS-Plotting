@@ -1,0 +1,160 @@
+privateenv.c:43
+Unreachable
+free_user_env is never called when (env == &rtems_global_user_env).
+This check is done by the caller (rtems_libio_share_private_env) in a different manner as below:
+"if (rtems_current_user_env->task_id==current_task_id) {"
+This makes sure that free_user_env is not called venv == &rtems_global_user_env
++++
+
+imfs_fifo.c:61
+Unreachable
+This is an error return path which only returns an error when
+pipe_release() returns an error but pipe_release() can't return
+an error.  Maybe pipe_release() should be changed to void.
++++
+
+imfs_getchild.c:51
+Unreachable
+This code cannot be reached. The routine IMFS_find_match_in_dir is
+called only if the token type is IMFS_NAME. If ".." is present in the
+path, the token type returned by IMFS_get_token would be
+IMFS_DIR_UP. With such a setup, IMFS_find_match_in_dir cannot be
+called with the name as ".."
++++
+
+imfs_fsunmount.c:86
+Ask Chris Johns
+I think he wrote this code and can probably identify the test case.
++++
+
+imfs_fsunmount.c:93
+Ask Chris Johns
+I think he wrote this code and can probably identify the test case.
++++
+
+imfs_mount.c:44
+Unreachable?
+We need to ask Chris Johns about this. I believe this is a
+case where the error checking has been done by the system 
+call layer.  I analyzed the "file handlers" callbacks for
+guarantees on parameters.  This indicates the same analysis
+needs to happen for "file system handlers."
+Bharath: Yes, it is checked in mount.c
++++
+
+imfs_debug.c:54
+Simple Test Case
+Need to do an IMFS_dump on an IMFS filesystem which has a very large
+file in it.  I think this is a simple addition to one of the existing
+IMFS tests which creates a large file.
++++
+
+imfs_debug.c:88
+Simple Test Case
+We need to do an IMFS_dump on an IMFS filesystem which has a bad node type
+in it.  This may require peeking behind the curtain and changing a
+value.
+Bharath: But usually, this code is unreachable since we cannot create
+a node which is not of type that is checked for.
++++
+
+imfs_rename.c:40
+Discuss
+I think this is either a simple test or unreachable code.  We need
+to discuss this to figure out which.
+Bharath: I am not sure how to have a node's parent == NULL.
++++
+
+imfs_unlink.c:51
+Discuss
+I think this is either a simple test or unreachable code.  We need
+to discuss this to figure out which.
++++
+
+imfs_unmount.c:45
+Discuss
+I think this is either a simple test or unreachable code.  We need
+to discuss this to figure out which.
++++
+
+imfs_unmount.c:52
+Discuss
+I think this is either a simple test or unreachable code.  We need
+to discuss this to figure out which.
++++ 
+
+newlibc_exit.c:89
+Simple Test Case
+libc_wrapup() is never called when the system state is down.
++++
+
+readv.c:106
+Simple Test Case
+The count needs to be -1 in one of the requests.  Also add a test for
+0 value at the same time since it appears that is a missing branch
+condition.
++++
+
+getpwent.c:127
+Discuss
+I think this is detecting whether or not the read can be fulfilled
+from the buffer.  But I am not sure.
++++
+
+getpwent.c:112
+Simple Test Case
+
+This is actually the error case at line 103 (*nleft < 2).  I think this
+will be hit by having a password entry which does not have enough
+characters left in the user's return buffer while something is
+being copied into it.
++++
+
+writev.c:104
+Simple Test Case
+This is a case of needing 0 values in the write iov entries.
++++
+
+writev.c:113
+Simple Test Case
+This is a case of needing negative values in the write iov entries.
++++
+
+vprintk.c:125
+Simple Test Case
+0x6f is a 'o'.  It looks like we do not have a printk test which uses %o.
++++
+
+imfs_load_tar.c:112
+Simple Test Case
+Need to make sure one of the tar tests is configured with the IMFS
+and the other is configured with fifoIMFS.
++++
+
+imfs_load_tar.c:151
+Simple Test Case
+We apparently only have a relative symbolic link.  We need to include
+one which has an absolute path. This will be a broken symlink on the
+host but resolve fine on the target.
++++
+
+imfs_load_tar.c:169
+Medium Test Case
+The eval for make must fail.  We will have to ask Jennifer how to
+make this call fail.
++++
+
+rtems_mkdir.c:102
+Email Sebastian
+Sebastian needs to write a test case for this.
++++
+
+rtems_mkdir.c:110
+Email Sebastian
+Sebastian needs to write a test case for this.
++++
+
+rtems_mkdir.c:124
+Email Sebastian
+Sebastian needs to write a test case for this.
++++

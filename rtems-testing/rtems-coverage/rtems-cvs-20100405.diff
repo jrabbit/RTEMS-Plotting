@@ -1,0 +1,4182 @@
+? contrib/apt-conf/Makefile.in
+? contrib/apt-conf/install-sh
+? contrib/apt-conf/missing
+? contrib/crossrpms/config.sub
+? contrib/repo-conf/INSTALL
+? contrib/repo-conf/Makefile.in
+? contrib/repo-conf/install-sh
+? contrib/repo-conf/missing
+Index: c/src/lib/libbsp/lm32/lm32_evr/make/custom/lm32_evr.cfg
+===================================================================
+RCS file: /usr1/CVS/rtems/c/src/lib/libbsp/lm32/lm32_evr/make/custom/lm32_evr.cfg,v
+retrieving revision 1.2
+diff -u -r1.2 lm32_evr.cfg
+--- c/src/lib/libbsp/lm32/lm32_evr/make/custom/lm32_evr.cfg	21 Oct 2009 10:43:22 -0000	1.2
++++ c/src/lib/libbsp/lm32/lm32_evr/make/custom/lm32_evr.cfg	6 Apr 2010 01:08:03 -0000
+@@ -16,9 +16,9 @@
+ #  and (hopefully) optimize for it.
+ CPU_CFLAGS =
+ 
+-# optimize flag: typically -O2
++# optimize flag: typically -Os
+ # ATM, doesn't work with optimization levels > 0
+-CFLAGS_OPTIMIZE_V = -O0 -g
++CFLAGS_OPTIMIZE_V = -Os -g
+ 
+ define bsp-post-link
+ 	$(OBJCOPY) -O binary --strip-all $(basename $@).exe \
+Index: testsuites/itrontests/itronhello/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itronhello/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itronhello/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itronhello/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itronhello_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itronmbf01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itronmbf01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itronmbf01/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itronmbf01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itronmbf01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itronmbox01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itronmbox01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itronmbox01/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itronmbox01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itronmbox01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itronsem01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itronsem01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itronsem01/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itronsem01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itronsem01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itrontask01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itrontask01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itrontask01/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itrontask01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itrontask01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itrontask02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itrontask02/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itrontask02/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itrontask02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itrontask02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itrontask03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itrontask03/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itrontask03/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itrontask03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itrontask03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itrontask04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itrontask04/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itrontask04/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itrontask04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itrontask04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/itrontests/itrontime01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/itrontests/itrontime01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/itrontests/itrontime01/Makefile.am	3 Apr 2009 12:45:16 -0000	1.23
++++ testsuites/itrontests/itrontime01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-itrontime01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block01/Makefile.am	30 Nov 2009 12:41:09 -0000	1.2
++++ testsuites/libtests/block01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block02/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block02/Makefile.am	30 Nov 2009 12:41:09 -0000	1.2
++++ testsuites/libtests/block02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block03/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block03/Makefile.am	30 Nov 2009 12:41:09 -0000	1.2
++++ testsuites/libtests/block03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block04/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block04/Makefile.am	30 Nov 2009 12:41:09 -0000	1.2
++++ testsuites/libtests/block04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block05/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/libtests/block05/Makefile.am	26 Jan 2010 15:09:02 -0000	1.3
++++ testsuites/libtests/block05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block06/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block06/Makefile.am	30 Nov 2009 12:41:10 -0000	1.2
++++ testsuites/libtests/block06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block07/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/block07/Makefile.am	30 Nov 2009 12:41:10 -0000	1.2
++++ testsuites/libtests/block07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block08/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/block08/Makefile.am	19 Jan 2010 08:55:18 -0000	1.1
++++ testsuites/libtests/block08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -36,7 +36,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block09/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/block09/Makefile.am	19 Jan 2010 08:55:18 -0000	1.1
++++ testsuites/libtests/block09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/block10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/block10/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/block10/Makefile.am	26 Jan 2010 15:09:02 -0000	1.1
++++ testsuites/libtests/block10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-block10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/bspcmdline01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/bspcmdline01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/bspcmdline01/Makefile.am	5 Aug 2009 19:36:57 -0000	1.1
++++ testsuites/libtests/bspcmdline01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-bspcmdline01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/cpuuse/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/cpuuse/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/libtests/cpuuse/Makefile.am	3 Apr 2009 12:46:19 -0000	1.23
++++ testsuites/libtests/cpuuse/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-cpuuse_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/heapwalk/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/heapwalk/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/heapwalk/Makefile.am	7 May 2009 17:48:15 -0000	1.1
++++ testsuites/libtests/heapwalk/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-heapwalk_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/malloctest/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/malloctest/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/libtests/malloctest/Makefile.am	3 Apr 2009 12:46:19 -0000	1.23
++++ testsuites/libtests/malloctest/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-malloctest_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/monitor/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/monitor/Makefile.am,v
+retrieving revision 1.22
+diff -u -r1.22 Makefile.am
+--- testsuites/libtests/monitor/Makefile.am	3 Apr 2009 12:46:19 -0000	1.22
++++ testsuites/libtests/monitor/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -12,7 +12,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-monitor_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/monitor02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/monitor02/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/libtests/monitor02/Makefile.am	3 Apr 2009 12:46:19 -0000	1.2
++++ testsuites/libtests/monitor02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -12,7 +12,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-monitor02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/putenvtest/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/putenvtest/Makefile.am,v
+retrieving revision 1.22
+diff -u -r1.22 Makefile.am
+--- testsuites/libtests/putenvtest/Makefile.am	3 Apr 2009 12:46:19 -0000	1.22
++++ testsuites/libtests/putenvtest/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -11,7 +11,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-putenvtest_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/rtems++/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/rtems++/Makefile.am,v
+retrieving revision 1.28
+diff -u -r1.28 Makefile.am
+--- testsuites/libtests/rtems++/Makefile.am	3 Apr 2009 12:46:19 -0000	1.28
++++ testsuites/libtests/rtems++/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -20,7 +20,6 @@
+ rtems___LDLIBS = -lrtems++
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+-rtems___LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(rtems___OBJECTS) $(rtems___LDADD)
+ LINK_LIBS = $(rtems___LDLIBS)
+Index: testsuites/libtests/rtmonuse/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/rtmonuse/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/libtests/rtmonuse/Makefile.am	3 Apr 2009 12:46:19 -0000	1.23
++++ testsuites/libtests/rtmonuse/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-rtmonuse_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/stackchk/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/stackchk/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/libtests/stackchk/Makefile.am	3 Apr 2009 12:46:19 -0000	1.23
++++ testsuites/libtests/stackchk/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-stackchk_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/stackchk01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/stackchk01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/stackchk01/Makefile.am	21 Sep 2009 20:12:08 -0000	1.1
++++ testsuites/libtests/stackchk01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-stackchk01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/stringto01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/stringto01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/stringto01/Makefile.am	1 Dec 2009 22:10:33 -0000	1.1
++++ testsuites/libtests/stringto01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-stringto01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/termios/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/termios/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/libtests/termios/Makefile.am	3 Apr 2009 12:46:19 -0000	1.23
++++ testsuites/libtests/termios/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -11,7 +11,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-termios_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/libtests/termios01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/termios01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/termios01/Makefile.am	15 Aug 2009 17:54:48 -0000	1.1
++++ testsuites/libtests/termios01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-termios01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/libtests/termios02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/libtests/termios02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/libtests/termios02/Makefile.am	1 Oct 2009 23:52:36 -0000	1.1
++++ testsuites/libtests/termios02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-termios02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/mptests/mp01/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp01/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp01/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp01/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -17,7 +17,6 @@
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+-mp01_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(mp01_node1_OBJECTS) $(mp01_node1_LDADD)
+ LINK_LIBS = $(mp01_node1_LDLIBS)
+Index: testsuites/mptests/mp01/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp01/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp01/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp01/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp01_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp02/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp02/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp02/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp02/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp02_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp02/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp02/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp02/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp02/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp02_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp03/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp03/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp03/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp03/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp03_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp03/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp03/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp03/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp03/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp03_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp04/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp04/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp04/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp04/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp04_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp04/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp04/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp04/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp04/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp04_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp05/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp05/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp05/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp05/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp05_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp05/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp05/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp05/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp05/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp05_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp06/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp06/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp06/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp06/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp06_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp06/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp06/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp06/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp06/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp06_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp07/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp07/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp07/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp07/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp07_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp07/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp07/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp07/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp07/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp07_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp08/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp08/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp08/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp08/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp08_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp08/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp08/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp08/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp08/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp08_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp09/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp09/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp09/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp09/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp09_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp09/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp09/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp09/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp09/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp09_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp10/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp10/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp10/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp10/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp10_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp10/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp10/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp10/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp10/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp10_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp11/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp11/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp11/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp11/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp11_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp11/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp11/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp11/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp11/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp11_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp12/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp12/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp12/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp12/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp12_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp12/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp12/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp12/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp12/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp12_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp13/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp13/node1/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp13/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp13/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp13_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp13/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp13/node2/Makefile.am,v
+retrieving revision 1.32
+diff -u -r1.32 Makefile.am
+--- testsuites/mptests/mp13/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.32
++++ testsuites/mptests/mp13/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp13_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ 
+Index: testsuites/mptests/mp14/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp14/node1/Makefile.am,v
+retrieving revision 1.33
+diff -u -r1.33 Makefile.am
+--- testsuites/mptests/mp14/node1/Makefile.am	3 Apr 2009 12:55:13 -0000	1.33
++++ testsuites/mptests/mp14/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp14_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I$(srcdir)/..
+ AM_CPPFLAGS += -DMAX_LONG_TEST_DURATION=$(MAX_LONG_TEST_DURATION)
+Index: testsuites/mptests/mp14/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/mptests/mp14/node2/Makefile.am,v
+retrieving revision 1.33
+diff -u -r1.33 Makefile.am
+--- testsuites/mptests/mp14/node2/Makefile.am	3 Apr 2009 12:55:13 -0000	1.33
++++ testsuites/mptests/mp14/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-mp14_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I$(srcdir)/..
+ AM_CPPFLAGS += -DMAX_LONG_TEST_DURATION=$(MAX_LONG_TEST_DURATION)
+Index: testsuites/psxtests/psx01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx01/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx01/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx02/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx02/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx03/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx03/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx04/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx04/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx05/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx05/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx06/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx06/Makefile.am	3 Apr 2009 12:44:40 -0000	1.25
++++ testsuites/psxtests/psx06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx07/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx07/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx08/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx08/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx09/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx09/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx10/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx10/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx11/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx11/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx11/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx11/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx11_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx12/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx12/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psx12/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psx12/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx12_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx13/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx13/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/psxtests/psx13/Makefile.am	3 Apr 2009 12:44:41 -0000	1.24
++++ testsuites/psxtests/psx13/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx13_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psx14/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psx14/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psx14/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psx14/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psx14_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxalarm01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxalarm01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxalarm01/Makefile.am	11 Oct 2009 22:32:03 -0000	1.1
++++ testsuites/psxtests/psxalarm01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxalarm01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxautoinit01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxautoinit01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxautoinit01/Makefile.am	7 Jul 2009 14:30:12 -0000	1.1
++++ testsuites/psxtests/psxautoinit01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxautoinit01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxautoinit02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxautoinit02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxautoinit02/Makefile.am	16 Jul 2009 15:00:44 -0000	1.1
++++ testsuites/psxtests/psxautoinit02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -16,7 +16,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxautoinit02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxbarrier01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxbarrier01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxbarrier01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxbarrier01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxbarrier01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxcancel/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxcancel/Makefile.am,v
+retrieving revision 1.28
+diff -u -r1.28 Makefile.am
+--- testsuites/psxtests/psxcancel/Makefile.am	23 Jul 2009 13:29:49 -0000	1.28
++++ testsuites/psxtests/psxcancel/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxcancel_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxcancel01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxcancel01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxcancel01/Makefile.am	28 Sep 2009 23:10:15 -0000	1.1
++++ testsuites/psxtests/psxcancel01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxcancel01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxchroot01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxchroot01/Makefile.am,v
+retrieving revision 1.21
+diff -u -r1.21 Makefile.am
+--- testsuites/psxtests/psxchroot01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.21
++++ testsuites/psxtests/psxchroot01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxchroot01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxcleanup/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxcleanup/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxcleanup/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxcleanup/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxcleanup_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxcleanup01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxcleanup01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxcleanup01/Makefile.am	12 Oct 2009 00:00:04 -0000	1.1
++++ testsuites/psxtests/psxcleanup01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxcleanup01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxclock/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxclock/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxclock/Makefile.am	13 Sep 2009 20:36:36 -0000	1.1
++++ testsuites/psxtests/psxclock/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxclock_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxcond01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxcond01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxcond01/Makefile.am	21 Jul 2009 15:07:26 -0000	1.1
++++ testsuites/psxtests/psxcond01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxcond01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxenosys/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxenosys/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/psxtests/psxenosys/Makefile.am	9 Nov 2009 14:47:06 -0000	1.3
++++ testsuites/psxtests/psxenosys/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxenosys_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxfatal01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxfatal01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxfatal01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxfatal01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxfatal01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/psxtests/psxfatal02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxfatal02/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxfatal02/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxfatal02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxfatal02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/psxtests/psxfile01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxfile01/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/psxtests/psxfile01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.25
++++ testsuites/psxtests/psxfile01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxfile01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxintrcritical01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxintrcritical01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxintrcritical01/Makefile.am	23 Jul 2009 20:30:01 -0000	1.1
++++ testsuites/psxtests/psxintrcritical01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxintrcritical01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../sptests/spintrcritical_support
+Index: testsuites/psxtests/psxitimer/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxitimer/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxitimer/Makefile.am	15 May 2009 17:42:27 -0000	1.1
++++ testsuites/psxtests/psxitimer/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxitimer_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxkey01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxkey01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxkey01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxkey01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxkey01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxkey02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxkey02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxkey02/Makefile.am	30 Jul 2009 18:48:56 -0000	1.1
++++ testsuites/psxtests/psxkey02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxkey02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxkey03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxkey03/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxkey03/Makefile.am	30 Jul 2009 20:21:41 -0000	1.1
++++ testsuites/psxtests/psxkey03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxkey03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmount/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmount/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/psxtests/psxmount/Makefile.am	3 Apr 2009 12:44:41 -0000	1.24
++++ testsuites/psxtests/psxmount/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmount_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmsgq01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmsgq01/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/psxtests/psxmsgq01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.26
++++ testsuites/psxtests/psxmsgq01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmsgq01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmsgq02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmsgq02/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxmsgq02/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxmsgq02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmsgq02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmsgq03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmsgq03/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxmsgq03/Makefile.am	10 Jun 2009 17:09:54 -0000	1.1
++++ testsuites/psxtests/psxmsgq03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmsgq03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmsgq04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmsgq04/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxmsgq04/Makefile.am	29 Jul 2009 20:15:33 -0000	1.1
++++ testsuites/psxtests/psxmsgq04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmsgq04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxmutexattr01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxmutexattr01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxmutexattr01/Makefile.am	17 Jul 2009 16:17:14 -0000	1.1
++++ testsuites/psxtests/psxmutexattr01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxmutexattr01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxobj01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxobj01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxobj01/Makefile.am	12 Jun 2009 15:17:49 -0000	1.1
++++ testsuites/psxtests/psxobj01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxobj01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxpasswd01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxpasswd01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxpasswd01/Makefile.am	3 Dec 2009 17:15:02 -0000	1.1
++++ testsuites/psxtests/psxpasswd01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxpasswd01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxrdwrv/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxrdwrv/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxrdwrv/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxrdwrv/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxrdwrv_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxreaddir/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxreaddir/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/psxtests/psxreaddir/Makefile.am	3 Apr 2009 12:44:41 -0000	1.24
++++ testsuites/psxtests/psxreaddir/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxreaddir_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxrwlock01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxrwlock01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxrwlock01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxrwlock01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxrwlock01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsem01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsem01/Makefile.am,v
+retrieving revision 1.27
+diff -u -r1.27 Makefile.am
+--- testsuites/psxtests/psxsem01/Makefile.am	22 Jul 2009 15:37:54 -0000	1.27
++++ testsuites/psxtests/psxsem01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsem01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsignal01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsignal01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxsignal01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxsignal01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsignal01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsignal02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsignal02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxsignal02/Makefile.am	24 Jul 2009 19:18:20 -0000	1.1
++++ testsuites/psxtests/psxsignal02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsignal02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsignal03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsignal03/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/psxtests/psxsignal03/Makefile.am	14 Sep 2009 00:15:55 -0000	1.3
++++ testsuites/psxtests/psxsignal03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsignal03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsignal04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsignal04/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxsignal04/Makefile.am	14 Sep 2009 00:15:55 -0000	1.2
++++ testsuites/psxtests/psxsignal04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsignal04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsignal05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsignal05/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxsignal05/Makefile.am	5 Aug 2009 18:13:29 -0000	1.1
++++ testsuites/psxtests/psxsignal05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsignal05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxspin01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxspin01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxspin01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxspin01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxspin01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxspin02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxspin02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxspin02/Makefile.am	20 Jul 2009 01:12:25 -0000	1.1
++++ testsuites/psxtests/psxspin02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxspin02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxstack01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxstack01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxstack01/Makefile.am	7 Aug 2009 00:42:47 -0000	1.1
++++ testsuites/psxtests/psxstack01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxstack01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxstat/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxstat/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/psxtests/psxstat/Makefile.am	3 Apr 2009 12:44:41 -0000	1.24
++++ testsuites/psxtests/psxstat/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxstat_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxsysconf/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxsysconf/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxsysconf/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxsysconf/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxsysconf_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxtime/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxtime/Makefile.am,v
+retrieving revision 1.22
+diff -u -r1.22 Makefile.am
+--- testsuites/psxtests/psxtime/Makefile.am	3 Apr 2009 12:44:41 -0000	1.22
++++ testsuites/psxtests/psxtime/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxtime_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/psxtests/psxtimer01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxtimer01/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxtimer01/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxtimer01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxtimer01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxtimer02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxtimer02/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxtimer02/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxtimer02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxtimer02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxualarm/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxualarm/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/psxtests/psxualarm/Makefile.am	3 Apr 2009 12:44:41 -0000	1.2
++++ testsuites/psxtests/psxualarm/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxualarm_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/psxtests/psxusleep/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/psxtests/psxusleep/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/psxtests/psxusleep/Makefile.am	12 Nov 2009 00:21:51 -0000	1.1
++++ testsuites/psxtests/psxusleep/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-psxusleep_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/samples/base_mp/node1/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/base_mp/node1/Makefile.am,v
+retrieving revision 1.33
+diff -u -r1.33 Makefile.am
+--- testsuites/samples/base_mp/node1/Makefile.am	30 Oct 2009 13:35:47 -0000	1.33
++++ testsuites/samples/base_mp/node1/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-base_mp_node1_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=1 -I.
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/samples/base_mp/node2/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/base_mp/node2/Makefile.am,v
+retrieving revision 1.33
+diff -u -r1.33 Makefile.am
+--- testsuites/samples/base_mp/node2/Makefile.am	30 Oct 2009 13:35:47 -0000	1.33
++++ testsuites/samples/base_mp/node2/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-base_mp_node2_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -DNODE_NUMBER=2 -I.
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/samples/base_sp/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/base_sp/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/samples/base_sp/Makefile.am	26 Oct 2009 11:32:35 -0000	1.25
++++ testsuites/samples/base_sp/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -16,7 +16,6 @@
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+-base_sp_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(base_sp_OBJECTS) $(base_sp_LDADD)
+ LINK_LIBS = $(base_sp_LDLIBS)
+Index: testsuites/samples/capture/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/capture/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/samples/capture/Makefile.am	3 Apr 2009 12:42:11 -0000	1.4
++++ testsuites/samples/capture/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-capture_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(capture_OBJECTS) $(capture_LDADD)
+ LINK_LIBS = $(capture_LDLIBS)
+Index: testsuites/samples/cdtest/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/cdtest/Makefile.am,v
+retrieving revision 1.27
+diff -u -r1.27 Makefile.am
+--- testsuites/samples/cdtest/Makefile.am	3 Apr 2009 12:42:12 -0000	1.27
++++ testsuites/samples/cdtest/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-cdtest_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ # AM_CPPFLAGS += -DRTEMS_TEST_IO_STREAM
+ 
+Index: testsuites/samples/fileio/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/fileio/Makefile.am,v
+retrieving revision 1.19
+diff -u -r1.19 Makefile.am
+--- testsuites/samples/fileio/Makefile.am	3 Apr 2009 12:42:12 -0000	1.19
++++ testsuites/samples/fileio/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -17,7 +17,6 @@
+ include $(top_srcdir)/../automake/leaf.am
+ 
+ if LIBCHIP
+-fileio_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(fileio_OBJECTS) $(fileio_LDADD)
+ LINK_LIBS = $(fileio_LDLIBS)
+Index: testsuites/samples/hello/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/hello/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/samples/hello/Makefile.am	26 Aug 2009 13:22:58 -0000	1.26
++++ testsuites/samples/hello/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-hello_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(hello_OBJECTS) $(hello_LDADD)
+ LINK_LIBS = $(hello_LDLIBS)
+Index: testsuites/samples/iostream/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/iostream/Makefile.am,v
+retrieving revision 1.16
+diff -u -r1.16 Makefile.am
+--- testsuites/samples/iostream/Makefile.am	3 Apr 2009 12:42:12 -0000	1.16
++++ testsuites/samples/iostream/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-cxx_iostream_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(cxx_iostream_OBJECTS) $(cxx_iostream_LDADD)
+ LINK_LIBS = $(cxx_iostream_LDLIBS)
+Index: testsuites/samples/loopback/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/loopback/Makefile.am,v
+retrieving revision 1.18
+diff -u -r1.18 Makefile.am
+--- testsuites/samples/loopback/Makefile.am	3 Apr 2009 12:42:12 -0000	1.18
++++ testsuites/samples/loopback/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-loopback_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(loopback_OBJECTS) $(loopback_LDADD)
+ LINK_LIBS = $(loopback_LDLIBS)
+Index: testsuites/samples/minimum/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/minimum/Makefile.am,v
+retrieving revision 1.27
+diff -u -r1.27 Makefile.am
+--- testsuites/samples/minimum/Makefile.am	3 Apr 2009 12:42:12 -0000	1.27
++++ testsuites/samples/minimum/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-minimum_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ # 	This test should not be executed
+ 
+Index: testsuites/samples/paranoia/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/paranoia/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/samples/paranoia/Makefile.am	3 Apr 2009 12:42:12 -0000	1.24
++++ testsuites/samples/paranoia/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -13,7 +13,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-paranoia_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ #  -DCYGNUS   turns on more verbose msgs
+ AM_CPPFLAGS += -DNOSIGNAL -DCYGNUS -DNOMAIN
+Index: testsuites/samples/pppd/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/pppd/Makefile.am,v
+retrieving revision 1.18
+diff -u -r1.18 Makefile.am
+--- testsuites/samples/pppd/Makefile.am	3 Apr 2009 12:42:12 -0000	1.18
++++ testsuites/samples/pppd/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -11,7 +11,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-pppd_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ pppd_LDLIBS = -lpppd
+ 
+Index: testsuites/samples/ticker/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/ticker/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/samples/ticker/Makefile.am	3 Apr 2009 12:42:12 -0000	1.26
++++ testsuites/samples/ticker/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-ticker_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(ticker_OBJECTS) $(ticker_LDADD)
+ LINK_LIBS = $(ticker_LDLIBS)
+Index: testsuites/samples/unlimited/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/samples/unlimited/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/samples/unlimited/Makefile.am	26 Oct 2009 11:32:35 -0000	1.25
++++ testsuites/samples/unlimited/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -16,7 +16,6 @@
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+-unlimited_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ LINK_OBJS = $(unlimited_OBJECTS) $(unlimited_LDADD)
+ LINK_LIBS = $(unlimited_LDLIBS)
+Index: testsuites/sptests/sp01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp01/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp02/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp02/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp03/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp03/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp04/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp04/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp05/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp05/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp06/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp06/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp07/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/sptests/sp07/Makefile.am	3 Apr 2009 12:48:12 -0000	1.24
++++ testsuites/sptests/sp07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp08/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp08/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp09/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp09/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -18,7 +18,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp10/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp10/Makefile.am	21 Jul 2009 19:32:30 -0000	1.1
++++ testsuites/sptests/sp10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp11/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp11/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp11/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp11/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp11_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp12/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp12/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp12/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp12/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp12_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp13/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp13/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp13/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp13/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp13_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp14/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp14/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp14/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp14/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp14_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp15/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp15/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp15/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp15/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp15_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp16/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp16/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp16/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp16/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp16_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp17/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp17/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp17/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp17/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp17_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp18/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp18/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp18/Makefile.am	30 Jul 2009 00:15:59 -0000	1.1
++++ testsuites/sptests/sp18/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp18_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp19/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp19/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp19/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp19/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp19_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp20/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp20/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp20/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp20/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp20_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp21/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp21/Makefile.am,v
+retrieving revision 1.24
+diff -u -r1.24 Makefile.am
+--- testsuites/sptests/sp21/Makefile.am	3 Apr 2009 12:48:12 -0000	1.24
++++ testsuites/sptests/sp21/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp21_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp22/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp22/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp22/Makefile.am	3 Apr 2009 12:48:12 -0000	1.23
++++ testsuites/sptests/sp22/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp22_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp23/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp23/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp23/Makefile.am	3 Apr 2009 12:48:13 -0000	1.23
++++ testsuites/sptests/sp23/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp23_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp24/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp24/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp24/Makefile.am	3 Apr 2009 12:48:13 -0000	1.23
++++ testsuites/sptests/sp24/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp24_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp25/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp25/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp25/Makefile.am	3 Apr 2009 12:48:13 -0000	1.23
++++ testsuites/sptests/sp25/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp25_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp26/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp26/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp26/Makefile.am	3 Apr 2009 12:48:13 -0000	1.23
++++ testsuites/sptests/sp26/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp26_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp27/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp27/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp27/Makefile.am	8 Jul 2009 20:26:44 -0000	1.23
++++ testsuites/sptests/sp27/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp27_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp27a/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp27a/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp27a/Makefile.am	8 Jul 2009 20:26:45 -0000	1.1
++++ testsuites/sptests/sp27a/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp27a_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -DUSE_COUNTING_SEMAPHORE
+Index: testsuites/sptests/sp28/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp28/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/sptests/sp28/Makefile.am	3 Apr 2009 12:48:13 -0000	1.23
++++ testsuites/sptests/sp28/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp28_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp29/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp29/Makefile.am,v
+retrieving revision 1.22
+diff -u -r1.22 Makefile.am
+--- testsuites/sptests/sp29/Makefile.am	3 Apr 2009 12:48:13 -0000	1.22
++++ testsuites/sptests/sp29/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp29_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp30/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp30/Makefile.am,v
+retrieving revision 1.19
+diff -u -r1.19 Makefile.am
+--- testsuites/sptests/sp30/Makefile.am	3 Apr 2009 12:48:13 -0000	1.19
++++ testsuites/sptests/sp30/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp30_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp31/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp31/Makefile.am,v
+retrieving revision 1.19
+diff -u -r1.19 Makefile.am
+--- testsuites/sptests/sp31/Makefile.am	3 Apr 2009 12:48:13 -0000	1.19
++++ testsuites/sptests/sp31/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp31_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp32/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp32/Makefile.am,v
+retrieving revision 1.17
+diff -u -r1.17 Makefile.am
+--- testsuites/sptests/sp32/Makefile.am	9 Nov 2009 14:25:27 -0000	1.17
++++ testsuites/sptests/sp32/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp32_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp33/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp33/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/sptests/sp33/Makefile.am	9 Nov 2009 14:25:27 -0000	1.4
++++ testsuites/sptests/sp33/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp33_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp37/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp37/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/sp37/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/sp37/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp37_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp38/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp38/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/sp38/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/sp38/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp38_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp39/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp39/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/sp39/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/sp39/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp39_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp40/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp40/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/sptests/sp40/Makefile.am	25 Jul 2009 01:39:45 -0000	1.4
++++ testsuites/sptests/sp40/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp40_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp41/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp41/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/sptests/sp41/Makefile.am	24 Jul 2009 20:43:06 -0000	1.4
++++ testsuites/sptests/sp41/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp41_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp42/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp42/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/sp42/Makefile.am	30 Jul 2009 17:10:04 -0000	1.3
++++ testsuites/sptests/sp42/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp42_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp43/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp43/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/sptests/sp43/Makefile.am	9 Nov 2009 14:25:28 -0000	1.4
++++ testsuites/sptests/sp43/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp43_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp44/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp44/Makefile.am,v
+retrieving revision 1.4
+diff -u -r1.4 Makefile.am
+--- testsuites/sptests/sp44/Makefile.am	9 Nov 2009 14:25:28 -0000	1.4
++++ testsuites/sptests/sp44/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp44_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp45/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp45/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp45/Makefile.am	3 Apr 2009 12:48:13 -0000	1.2
++++ testsuites/sptests/sp45/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp45_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp46/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp46/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/sp46/Makefile.am	3 Apr 2009 12:48:13 -0000	1.3
++++ testsuites/sptests/sp46/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp46_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp47/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp47/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp47/Makefile.am	3 Apr 2009 12:48:13 -0000	1.2
++++ testsuites/sptests/sp47/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp47_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp48/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp48/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp48/Makefile.am	3 Apr 2009 12:48:13 -0000	1.2
++++ testsuites/sptests/sp48/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp48_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp49/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp49/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp49/Makefile.am	21 May 2009 14:34:14 -0000	1.1
++++ testsuites/sptests/sp49/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp49_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp50/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp50/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp50/Makefile.am	21 May 2009 15:42:52 -0000	1.1
++++ testsuites/sptests/sp50/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp50_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp51/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp51/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp51/Makefile.am	21 May 2009 19:40:07 -0000	1.1
++++ testsuites/sptests/sp51/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp51_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp52/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp52/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp52/Makefile.am	8 Jun 2009 21:05:20 -0000	1.1
++++ testsuites/sptests/sp52/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp52_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp53/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp53/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp53/Makefile.am	8 Jun 2009 21:05:20 -0000	1.1
++++ testsuites/sptests/sp53/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp53_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -DUSE_TIMER_SERVER
+Index: testsuites/sptests/sp54/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp54/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp54/Makefile.am	8 Jul 2009 20:25:30 -0000	1.2
++++ testsuites/sptests/sp54/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp54_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp55/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp55/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp55/Makefile.am	8 Jul 2009 20:25:30 -0000	1.2
++++ testsuites/sptests/sp55/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp55_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp56/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp56/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp56/Makefile.am	8 Jul 2009 20:25:30 -0000	1.2
++++ testsuites/sptests/sp56/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp56_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp57/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp57/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/sp57/Makefile.am	8 Jul 2009 20:25:30 -0000	1.2
++++ testsuites/sptests/sp57/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp57_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp58/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp58/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp58/Makefile.am	9 Jul 2009 18:21:58 -0000	1.1
++++ testsuites/sptests/sp58/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp58_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp59/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp59/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp59/Makefile.am	9 Jul 2009 20:23:38 -0000	1.1
++++ testsuites/sptests/sp59/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp59_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp60/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp60/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp60/Makefile.am	20 Jul 2009 01:05:33 -0000	1.1
++++ testsuites/sptests/sp60/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp60_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp61/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp61/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp61/Makefile.am	20 Jul 2009 01:05:33 -0000	1.1
++++ testsuites/sptests/sp61/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp61_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp62/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp62/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp62/Makefile.am	28 Jul 2009 23:49:47 -0000	1.1
++++ testsuites/sptests/sp62/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp62_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp63/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp63/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp63/Makefile.am	1 Aug 2009 00:25:20 -0000	1.1
++++ testsuites/sptests/sp63/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp63_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp64/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp64/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp64/Makefile.am	5 Aug 2009 20:58:16 -0000	1.1
++++ testsuites/sptests/sp64/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp64_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/sptests/sp65/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp65/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp65/Makefile.am	12 Aug 2009 13:09:36 -0000	1.1
++++ testsuites/sptests/sp65/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp65_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/sptests/sp66/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp66/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp66/Makefile.am	14 Sep 2009 20:05:44 -0000	1.1
++++ testsuites/sptests/sp66/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp66_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/sptests/sp67/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp67/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp67/Makefile.am	10 Oct 2009 15:03:30 -0000	1.1
++++ testsuites/sptests/sp67/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp67_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp68/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp68/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp68/Makefile.am	30 Nov 2009 09:08:35 -0000	1.1
++++ testsuites/sptests/sp68/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp68_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/sp69/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/sp69/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/sp69/Makefile.am	8 Dec 2009 23:07:38 -0000	1.1
++++ testsuites/sptests/sp69/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-sp69_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spchain/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spchain/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/spchain/Makefile.am	8 Jul 2009 20:25:30 -0000	1.2
++++ testsuites/sptests/spchain/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spchain_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spclockget/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spclockget/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spclockget/Makefile.am	10 Aug 2009 17:04:50 -0000	1.1
++++ testsuites/sptests/spclockget/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spclockget_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spcoverage/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spcoverage/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spcoverage/Makefile.am	11 Aug 2009 17:53:09 -0000	1.1
++++ testsuites/sptests/spcoverage/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spcoverage_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/include
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+Index: testsuites/sptests/spfatal01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal01/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal01/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal02/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal02/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal03/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal03/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal04/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal04/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal05/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal05/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal06/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal06/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal07/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal07/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal08/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal08/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal09/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal09/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spfatal09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal10/Makefile.am,v
+retrieving revision 1.5
+diff -u -r1.5 Makefile.am
+--- testsuites/sptests/spfatal10/Makefile.am	4 Sep 2009 21:28:56 -0000	1.5
++++ testsuites/sptests/spfatal10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal11/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal11/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal11/Makefile.am	4 Sep 2009 21:28:56 -0000	1.3
++++ testsuites/sptests/spfatal11/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal11_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal12/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal12/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spfatal12/Makefile.am	4 Sep 2009 21:28:56 -0000	1.3
++++ testsuites/sptests/spfatal12/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal12_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spfatal13/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spfatal13/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spfatal13/Makefile.am	10 Mar 2010 18:14:43 -0000	1.1
++++ testsuites/sptests/spfatal13/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spfatal13_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spintrcritical01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical01/Makefile.am	10 Jul 2009 20:28:10 -0000	1.1
++++ testsuites/sptests/spintrcritical01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical02/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical02/Makefile.am	10 Jul 2009 20:28:10 -0000	1.1
++++ testsuites/sptests/spintrcritical02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical03/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical03/Makefile.am	10 Jul 2009 20:28:10 -0000	1.1
++++ testsuites/sptests/spintrcritical03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical04/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical04/Makefile.am	10 Jul 2009 20:28:10 -0000	1.1
++++ testsuites/sptests/spintrcritical04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical05/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical05/Makefile.am	10 Jul 2009 20:28:10 -0000	1.1
++++ testsuites/sptests/spintrcritical05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical06/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical06/Makefile.am	20 Jul 2009 14:49:25 -0000	1.1
++++ testsuites/sptests/spintrcritical06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical07/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical07/Makefile.am	20 Jul 2009 18:38:27 -0000	1.1
++++ testsuites/sptests/spintrcritical07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical08/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical08/Makefile.am	21 Jul 2009 15:16:57 -0000	1.1
++++ testsuites/sptests/spintrcritical08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical09/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical09/Makefile.am	21 Jul 2009 15:16:57 -0000	1.1
++++ testsuites/sptests/spintrcritical09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical10/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical10/Makefile.am	21 Jul 2009 23:06:45 -0000	1.1
++++ testsuites/sptests/spintrcritical10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical11/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical11/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical11/Makefile.am	21 Jul 2009 23:06:13 -0000	1.1
++++ testsuites/sptests/spintrcritical11/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical11_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical12/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical12/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical12/Makefile.am	21 Jul 2009 23:06:13 -0000	1.1
++++ testsuites/sptests/spintrcritical12/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical12_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical13/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical13/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical13/Makefile.am	23 Jul 2009 18:54:23 -0000	1.1
++++ testsuites/sptests/spintrcritical13/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical13_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical14/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical14/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical14/Makefile.am	23 Jul 2009 18:54:23 -0000	1.1
++++ testsuites/sptests/spintrcritical14/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical14_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical15/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical15/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical15/Makefile.am	27 Jul 2009 22:04:19 -0000	1.1
++++ testsuites/sptests/spintrcritical15/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical15_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical16/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical16/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical16/Makefile.am	28 Jul 2009 19:23:49 -0000	1.1
++++ testsuites/sptests/spintrcritical16/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical16_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spintrcritical17/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spintrcritical17/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spintrcritical17/Makefile.am	30 Nov 2009 09:08:35 -0000	1.1
++++ testsuites/sptests/spintrcritical17/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -15,7 +15,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spintrcritical17_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ AM_CPPFLAGS += -I$(top_srcdir)/spintrcritical_support
+Index: testsuites/sptests/spnotepad01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spnotepad01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spnotepad01/Makefile.am	29 Sep 2009 00:06:43 -0000	1.1
++++ testsuites/sptests/spnotepad01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spnotepad01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spobjgetnext/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spobjgetnext/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/spobjgetnext/Makefile.am	9 Nov 2009 14:25:28 -0000	1.2
++++ testsuites/sptests/spobjgetnext/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spobjgetnext_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spprintk/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spprintk/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/spprintk/Makefile.am	9 Nov 2009 14:25:28 -0000	1.2
++++ testsuites/sptests/spprintk/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spprintk_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spsize/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spsize/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/sptests/spsize/Makefile.am	17 Nov 2009 03:47:52 -0000	1.26
++++ testsuites/sptests/spsize/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spsize_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spstkalloc/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spstkalloc/Makefile.am,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile.am
+--- testsuites/sptests/spstkalloc/Makefile.am	8 Jul 2009 20:26:01 -0000	1.2
++++ testsuites/sptests/spstkalloc/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spstkalloc_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spthreadq01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spthreadq01/Makefile.am,v
+retrieving revision 1.1
+diff -u -r1.1 Makefile.am
+--- testsuites/sptests/spthreadq01/Makefile.am	9 Jul 2009 19:02:40 -0000	1.1
++++ testsuites/sptests/spthreadq01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spthreadq01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spwatchdog/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spwatchdog/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spwatchdog/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spwatchdog/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spwatchdog_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/sptests/spwkspace/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/sptests/spwkspace/Makefile.am,v
+retrieving revision 1.3
+diff -u -r1.3 Makefile.am
+--- testsuites/sptests/spwkspace/Makefile.am	9 Nov 2009 14:25:28 -0000	1.3
++++ testsuites/sptests/spwkspace/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-spwkspace_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ AM_CPPFLAGS += -I$(top_srcdir)/../support/include
+ 
+Index: testsuites/tmitrontests/tmitronsem01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmitrontests/tmitronsem01/Makefile.am,v
+retrieving revision 1.23
+diff -u -r1.23 Makefile.am
+--- testsuites/tmitrontests/tmitronsem01/Makefile.am	3 Apr 2009 12:53:10 -0000	1.23
++++ testsuites/tmitrontests/tmitronsem01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tmitronsem01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm01/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm01/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm01/Makefile.am	3 Apr 2009 12:51:08 -0000	1.26
++++ testsuites/tmtests/tm01/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm01_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm02/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm02/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/tmtests/tm02/Makefile.am	3 Apr 2009 12:51:08 -0000	1.25
++++ testsuites/tmtests/tm02/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm02_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm03/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm03/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/tmtests/tm03/Makefile.am	3 Apr 2009 12:51:08 -0000	1.25
++++ testsuites/tmtests/tm03/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm03_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm04/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm04/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/tmtests/tm04/Makefile.am	3 Apr 2009 12:51:08 -0000	1.25
++++ testsuites/tmtests/tm04/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm04_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm05/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm05/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm05/Makefile.am	3 Apr 2009 12:51:08 -0000	1.26
++++ testsuites/tmtests/tm05/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm05_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm06/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm06/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm06/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm06/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm06_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm07/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm07/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm07/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm07/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm07_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm08/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm08/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm08/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm08/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm08_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm09/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm09/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm09/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm09/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm09_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm10/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm10/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm10/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm10/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm10_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm11/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm11/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm11/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm11/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm11_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm12/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm12/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm12/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm12/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm12_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm13/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm13/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm13/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm13/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm13_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm14/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm14/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm14/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm14/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm14_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm15/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm15/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm15/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm15/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm15_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm16/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm16/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm16/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm16/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm16_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm17/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm17/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm17/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm17/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm17_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm18/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm18/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm18/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm18/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm18_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm19/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm19/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm19/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm19/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm19_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm20/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm20/Makefile.am,v
+retrieving revision 1.28
+diff -u -r1.28 Makefile.am
+--- testsuites/tmtests/tm20/Makefile.am	3 Apr 2009 12:51:09 -0000	1.28
++++ testsuites/tmtests/tm20/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm20_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm21/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm21/Makefile.am,v
+retrieving revision 1.25
+diff -u -r1.25 Makefile.am
+--- testsuites/tmtests/tm21/Makefile.am	3 Apr 2009 12:51:09 -0000	1.25
++++ testsuites/tmtests/tm21/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm21_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm22/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm22/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm22/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm22/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm22_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm23/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm23/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm23/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm23/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm23_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm24/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm24/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm24/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm24/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm24_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm25/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm25/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm25/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm25/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm25_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm26/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm26/Makefile.am,v
+retrieving revision 1.27
+diff -u -r1.27 Makefile.am
+--- testsuites/tmtests/tm26/Makefile.am	3 Apr 2009 12:51:09 -0000	1.27
++++ testsuites/tmtests/tm26/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm26_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm27/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm27/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm27/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm27/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm27_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm28/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm28/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm28/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm28/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm28_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tm29/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tm29/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tm29/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tm29/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tm29_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tmck/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tmck/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tmck/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tmck/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tmck_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)
+Index: testsuites/tmtests/tmoverhd/Makefile.am
+===================================================================
+RCS file: /usr1/CVS/rtems/testsuites/tmtests/tmoverhd/Makefile.am,v
+retrieving revision 1.26
+diff -u -r1.26 Makefile.am
+--- testsuites/tmtests/tmoverhd/Makefile.am	3 Apr 2009 12:51:09 -0000	1.26
++++ testsuites/tmtests/tmoverhd/Makefile.am	6 Apr 2010 01:08:03 -0000
+@@ -14,7 +14,6 @@
+ include $(top_srcdir)/../automake/compile.am
+ include $(top_srcdir)/../automake/leaf.am
+ 
+-tmoverhd_LDADD = $(MANAGERS_NOT_WANTED:%=$(PROJECT_LIB)/no-%.rel)
+ 
+ OPERATION_COUNT = @OPERATION_COUNT@
+ AM_CPPFLAGS += -I$(top_srcdir)/include -DOPERATION_COUNT=$(OPERATION_COUNT)

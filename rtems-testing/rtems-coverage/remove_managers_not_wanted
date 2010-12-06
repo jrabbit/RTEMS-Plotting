@@ -1,0 +1,24 @@
+#! /bin/sh
+
+if [ ! -d sptests ] ; then
+  echo must run from rtems/testsuites
+  exit 1 
+fi
+
+find . -name Makefile.am | \
+  xargs -e grep -l "^.*_LDADD.*MANAGERS_NOT_WANTED" | \
+  while read f
+  do
+    sed -e '/^.*_LDADD.*MANAGERS_NOT_WANTED/d' <$f >XXX
+    mv XXX $f
+    echo $f
+  done
+
+find . -name Makefile.am | \
+  xargs -e grep -l "^MANAGERS.*=" | \
+  while read f
+  do
+    sed -e 's/^MANAGERS.*=.*$/MANAGERS = all/' <$f >XXX
+    mv XXX $f
+    echo $f
+  done

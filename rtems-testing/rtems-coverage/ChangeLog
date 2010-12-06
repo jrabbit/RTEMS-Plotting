@@ -1,0 +1,99 @@
+2010-10-16	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* generate_coverage_html: Increase thickness of lines.
+
+2010-10-14	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* generate_coverage_html: Add uncovered ranges.
+
+2010-10-14	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* generate_coverage_html: Add progress tracking time/series plots.
+
+2010-08-26	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* Explanations.txt: Remove cases which are now RTEMS_DEBUG.
+
+2010-08-09	Bharath Suri <bharath.s.jois@gmail.com>
+
+	PR 1659/testing
+	* Explanations.txt: Update.
+
+2010-08-04	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* do_coverage: Add remove_unwanted_symbols.
+
+2010-08-02	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* Explanations.txt: Update. Remove old ones and add a number of new
+	entries.
+
+2010-07-14	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* do_coverage, rtems_items.sed: Include more info in summary.
+
+2010-07-14	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* do_coverage: Add libdevfs which was split from libimfs.
+
+2010-06-30	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* do_coverage: Add information on unreferenced symbols to summary.txt.
+
+2010-06-21	Jennifer Averett <Jennifer.Averett@OARcorp.com
+
+	* Categories.txt, Explanations.txt: Added explinations for wrapper
+	functions andsome of the not implemented functions.
+
+2010-06-21	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* Explanations.txt: Augment explanation.
+
+2010-06-21	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* Categories.txt: New file.
+
+2010-06-16	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* generate_coverage_html: Another place where sort -u should have been
+	after the cut.
+
+2010-06-09	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* generate_coverage_html: sort after the cut so the cpus are unique not
+	the target names. This made a CPU show up twice when we had
+	difference RTEMS branches in the results (e.g. sparc-rtems4.10 and
+	sparc-rtems4.11).
+
+2010-06-08	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* do_coverage: Until untar test is committed do not include it. It's
+	presence is hiding other coverage improvements.
+
+2010-06-07	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* VERSIONS-COVERAGE, do_coverage: Now builds with 4.11.
+
+2010-05-31	Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* Explanations.txt: Update.
+
+2010-05-26	Joel Sherrill <joel.sherrilL@OARcorp.com>
+
+	* do_coverage: Include libuntar.
+
+2010-05-25	Jennifer Averett <Jennifer.Averett@OARcorp.com>
+
+	* do_coverage, rtems_items.sed: Moved the summary report to the covoar
+	common reports in the report class and out of the rtems specific
+	items in the report index.
+
+2010-05-24	TEAM
+
+	* covoar source split out to own directory.
+
+2010-05-24	Jennifer Averett <Jennifer.Averett@OARcorp.com>
+
+	* VERSIONS-COVERAGE, do_coverage: Created covoar directory with source
+	that will be moved from rtems-coverage.
+

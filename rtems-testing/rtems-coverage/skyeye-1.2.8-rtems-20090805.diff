@@ -1,0 +1,226 @@
+Index: device/nandflash/nandflash_smallblock.c
+===================================================================
+--- device/nandflash/nandflash_smallblock.c	(revision 725)
++++ device/nandflash/nandflash_smallblock.c	(working copy)
+@@ -516,7 +516,7 @@
+ #endif
+ 	nf->writebuffer=(u8*)malloc(dev->pagedumpsize);
+ 	//nf->memsize=528*32*4096;
+-       if ((nf->fdump= open(dev->dump, FILE_FLAG)) < 0)
++	if ((nf->fdump= open(dev->dump, FILE_FLAG, FILE_MODE)) < 0)
+        {
+        	free(nf);
+        	printf("error open nandflash dump!\n");
+Index: device/nandflash/nandflash_smallblock.h
+===================================================================
+--- device/nandflash/nandflash_smallblock.h	(revision 725)
++++ device/nandflash/nandflash_smallblock.h	(working copy)
+@@ -27,6 +27,8 @@
+ 	#define FILE_FLAG   (O_RDWR | O_CREAT)
+ #endif
+ 
++#define FILE_MODE (0x777)
++
+ #if (defined(__MINGW32__) || defined(__BEOS__))
+ 	#define POSIX_SHARE_MEMORY_BROKEN
+ #endif
+Index: memory/ram.c
+===================================================================
+--- memory/ram.c	(revision 725)
++++ memory/ram.c	(working copy)
+@@ -261,10 +261,10 @@
+ 	void * state;
+ 	switch(size){
+ 		case 8:
+-			*(uint8_t *)value = (uint8_t)mem_read_byte (offset);
++			*value = (uint8_t)mem_read_byte (offset);
+ 			break;
+ 		case 16:
+-			*(uint16_t *)value = (uint16_t)mem_read_halfword(offset);
++			*value = (uint16_t)mem_read_halfword(offset);
+ 			break;
+ 		case 32:
+ 			*value = mem_read_word(offset);
+Index: arch/arm/common/armemu.c
+===================================================================
+--- arch/arm/common/armemu.c	(revision 725)
++++ arch/arm/common/armemu.c	(working copy)
+@@ -676,7 +676,15 @@
+ 		}
+ 		io_do_cycle (state);
+ 		state->NumInstrs++;
+-
++		if (skyeye_config.shutdown_device.status){
++			if (skyeye_config.shutdown_device.max_ins){
++				if (state->NumInstrs >= skyeye_config.shutdown_device.max_ins){
++					fprintf(stderr, "Shutdown_device:max_ins expired\n");
++					skyeye_exit(-1);
++				}
++			}
++		}
++	
+ #ifdef MODET
+ 		/* Provide Thumb instruction decoding. If the processor is in Thumb
+ 		   mode, then we can simply decode the Thumb instruction, and map it
+@@ -5069,6 +5077,11 @@
+ 	MEM_STORE_LOG("WORD");
+ 
+ 	BUSUSEDINCPCN;
++
++	if(skyeye_config.shutdown_device.status){
++		if(address == skyeye_config.shutdown_device.shutdown_addr)
++			skyeye_exit(-1);
++	}
+ #ifndef MODE32
+ 	if (DESTReg == 15)
+ 		state->Reg[15] = ECC | ER15INT | R15PC | EMODE;
+Index: utils/profile/code_cov.c
+===================================================================
+--- utils/profile/code_cov.c	(revision 725)
++++ utils/profile/code_cov.c	(working copy)
+@@ -93,6 +93,7 @@
+  */
+ void cov_fini(char * filename){
+ 	FILE * fp = fopen(filename, "w+");
++
+ 	if(!fp){
+ 		SKYEYE_ERR(stderr, "Warning: can not open file %s for code coverage\n", filename);
+ 		return;
+Index: utils/main/skyeye.c
+===================================================================
+--- utils/main/skyeye.c	(revision 725)
++++ utils/main/skyeye.c	(working copy)
+@@ -549,6 +549,8 @@
+ 
+ void skyeye_exit(int ret)
+ {
++	if(skyeye_config.code_cov.prof_on)
++		cov_fini(skyeye_config.code_cov.prof_filename);
+ 	/*
+ 	 * 2007-01-24 removed the term-io functions by Anthony Lee,
+ 	 * moved to "device/uart/skyeye_uart_stdio.c".
+@@ -575,9 +577,7 @@
+ /* 2007-01-31 disabled by Anthony Lee on BeOS for multi-thread safe. */
+ void sigint_handler (int signum)
+ {
+-	 if(skyeye_config.code_cov.prof_on)
+-		cov_fini(skyeye_config.code_cov.prof_filename);
+-	longjmp (ctrl_c_cleanup, 1);
++	skyeye_exit(-1);
+ }
+ #endif
+ 
+Index: utils/config/skyeye_config.h
+===================================================================
+--- utils/config/skyeye_config.h	(revision 725)
++++ utils/config/skyeye_config.h	(working copy)
+@@ -100,6 +100,21 @@
+ 
+ } machine_config_t;
+ 
++/*
++ * If status of shutdown device is 1, when "shutdown_addr"
++ * (align on 8bytes) is written, SKYEYE simulator exits.
++ * If the number of executed instructions by skyeye simulator
++ * is bigger than "max_instructions", then skyeye return with
++ * value 2
++*/
++typedef struct shutdown_config
++{
++	unsigned int status;
++	u32 shutdown_addr;
++	unsigned long long  max_ins;
++}shutdown_config_t;
++	
++
+ #define MAX_BANK 8
+ #define MAX_STR  1024
+ 
+@@ -183,6 +198,7 @@
+ int do_dummy_option ();
+ int do_arch_option ();
+ int do_cpu_option ();
++int do_shutdown_option ();
+ int do_mach_option ();
+ int do_mem_bank_option ();
+ int do_net_option ();
+@@ -248,6 +264,7 @@
+ 	//mem_config_t mem;
+ //chy 2003-09-12, now support more io banks
+ //      ioaddr_config_t ioaddr; //used for ARMul_notIOaddr funciton
++	shutdown_config_t shutdown_device;
+ 	net_config_t net[NET_MAXNICNUM_PER_HOST];
+ 	uart_config_t uart;
+ 	log_config_t log;
+@@ -280,10 +297,12 @@
+ 	{"arch", do_arch_option, 0, 1},
+ 	{"cpu", do_cpu_option, 0, 1},
+ 	{"mach", do_mach_option, 0, 1},
++	{"shutdown_device", do_shutdown_option,0, 1},
+ 
+ 	/*mem option */
+ 	{"mem_bank", do_mem_bank_option, 0, MAX_BANK},
+ 
++
+ 	{"net", do_net_option, 0, 10},
+ 	{"energy", do_energy_option, 0, 1},
+ 	{"uart", do_uart_option, 0, MAX_UART_DEVICE_NUM},
+Index: utils/config/skyeye_options.c
+===================================================================
+--- utils/config/skyeye_options.c	(revision 725)
++++ utils/config/skyeye_options.c	(working copy)
+@@ -79,6 +79,9 @@
+ 	config->uart.count = 0;
+ 	atexit(skyeye_uart_cleanup);
+ 
++	config->shutdown_device.status = 0;
++	config->shutdown_device.max_ins = 0;
++
+ 	/*ywc 2005-04-01 */
+ 	config->no_dbct = 1;	/*default, dbct is off */
+ 	//teawater add for new tb manage function 2005.07.10----------------------------
+@@ -247,6 +250,44 @@
+ }
+ 
+ int
++do_shutdown_option (skyeye_option_t * this_option, int num_params,
++		const char *params[])
++{
++	int ret;
++	char *value;
++	shutdown_config_t *shutdown = &(skyeye_config.shutdown_device);
++	if(ret = strncmp(params[0],"addr=",5)){
++		SKYEYE_ERR ("Error, Wrong parameter for shutdown_device\n");
++		return -1;
++	}
++	value = &(params[0][5]);
++	if(value[0]=='0' && (value[1] == 'x' || value[1] == 'X'))
++		shutdown->shutdown_addr = (unsigned int)strtoul(value,NULL,16);
++	else
++		shutdown->shutdown_addr = (unsigned int)strtoul(value,NULL,10);
++	if(shutdown->shutdown_addr & 0x7){
++		SKYEYE_ERR ("Error, shutdown address needs align on 8 bytes\n");
++		return -1;
++	}
++	
++	if(ret = strncmp(params[1],"max_ins=",8)){
++		SKYEYE_ERR ("Error, Wrong parameter for shutdown_device\n");
++		return -1;
++	}
++	value = &(params[1][8]);
++	if(value[0]=='0' && (value[1] == 'x' || value[1] == 'X'))
++		shutdown->max_ins = strtoull(value,NULL,16);
++	else
++		shutdown->max_ins = strtoull(value,NULL,10);
++      	
++	shutdown->status = 1;
++
++	printf("Shutdown addr=%x, max_ins=%x\n",shutdown->shutdown_addr,shutdown->max_ins);
++	return 1;
++}
++
++
++int
+ do_mem_bank_option (skyeye_option_t * this_option, int num_params,
+ 		    const char *params[])
+ {
