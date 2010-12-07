@@ -8,11 +8,18 @@
   var timeplot;
 
   function onLoad() {
+    var target = 'erc32'
     var eventSource = new Timeplot.DefaultEventSource();
     var plotInfo = [
       Timeplot.createPlotInfo({
         id: "plot1",
-        dataSource: new Timeplot.ColumnSource(eventSource,1)
+        dataSource: new Timeplot.ColumnSource(eventSource,1),
+        timeGeometry: new Timeplot.DefaultTimeGeometry({
+            gridColor: "#000000",
+            axisLabelsPlacement: "top",
+              }),
+        lineColor: "#ff0000",
+        fillColor: "#cc8080"
       })
     ];
 
@@ -32,6 +39,6 @@
   
   </script>
   <body onload="onLoad();" onresize="onResize();">
-      <div id="my-timeplot" style="height: 150px;"></div>
+      <div id="my-timeplot" style="height: 250px;"></div>
   </body>
 </html>
