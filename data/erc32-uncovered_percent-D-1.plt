@@ -19,3 +19,4 @@ plot "plot_data/erc32-OspD-uncovered_percent.dat" using 1:2 index 0 \
   title "O2pD" with lines lw 2, \
      "plot_data/erc32-O2PD-uncovered_percent.dat" using 1:2 index 0 \
   title "O2PD" with lines lw 2
+set,terminalset,xdata#,time#,YYYYMMDD-HHMMSSset,timefmtset,outputset,xrangeset,yrangeset,gridset,xlabelset,ylabelset,titleset,keyplot,"plot_data/erc32-OspD-uncovered_percent.dat"title,"OspD""plot_data,usingtitle,"OsPD""plot_data,usingtitle,"O2pD""plot_data,usingtitle,"O2PD"

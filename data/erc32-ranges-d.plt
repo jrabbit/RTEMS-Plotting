@@ -19,3 +19,4 @@ plot "plot_data/erc32-Ospd-ranges.dat" using 1:2 index 0 \
   title "O2pd" with lines lw 2, \
      "plot_data/erc32-O2Pd-ranges.dat" using 1:2 index 0 \
   title "O2Pd" with lines lw 2
+set,terminalset,xdata#,time#,YYYYMMDD-HHMMSSset,timefmtset,outputset,xrangeset,yrangeset,gridset,xlabelset,ylabelset,titleset,keyplot,"plot_data/erc32-Ospd-ranges.dat"title,"Ospd""plot_data,usingtitle,"OsPd""plot_data,usingtitle,"O2pd""plot_data,usingtitle,"O2Pd"

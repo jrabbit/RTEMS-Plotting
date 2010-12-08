@@ -9,23 +9,89 @@
 
   function onLoad() {
     var target = 'erc32'
-    var eventSource = new Timeplot.DefaultEventSource();
+    var core = 1
+    var development = 0
+    //core
+    if (core>0)
+    {
+        var eventSourceOspd = new Timeplot.DefaultEventSource();
+        var eventSourceOsPd = new Timeplot.DefaultEventSource();
+        var eventSourceO2pd = new Timeplot.DefaultEventSource();
+        var eventSourceO2Pd = new Timeplot.DefaultEventSource();
+    }
+    
+    //development
+    if (development>0)
+    {
+        var eventSourceOspD = new Timeplot.DefaultEventSource();
+        var eventSourceOsPD = new Timeplot.DefaultEventSource();
+        var eventSourceO2pD = new Timeplot.DefaultEventSource();
+        var eventSourceO2PD = new Timeplot.DefaultEventSource();
+    }
+    var timeGeometry = new Timeplot.DefaultTimeGeometry({
+       gridColor: new Timeplot.Color("#000000"),
+       axisLabelsPlacement: "top"
+     });
+
+     var valueGeometry = new Timeplot.DefaultValueGeometry({
+       gridColor: "#000000",
+       min: 0,
+       max: 5
+     });
+    
     var plotInfo = [
       Timeplot.createPlotInfo({
-        id: "plot1",
-        dataSource: new Timeplot.ColumnSource(eventSource,1),
+        id: "one",
+        dataSource: new Timeplot.ColumnSource(eventSourceOspd,1),
         timeGeometry: new Timeplot.DefaultTimeGeometry({
             gridColor: "#000000",
             axisLabelsPlacement: "top"
               }),
         lineColor: "#ff0000",
-        fillColor: "#cc8080",
+        //fillColor: "#cc8080",
         showValues: true
-      })
+      }),
+        Timeplot.createPlotInfo({
+            id: "two",
+            dataSource: new Timeplot.ColumnSource(eventSourceOsPd,1),
+            timeGeometry: timeGeometry,
+            valueGeometry: valueGeometry,
+            lineColor: "#4ECDC4",
+            showValues: true
+          }),
+        Timeplot.createPlotInfo({
+          id: "three",
+          dataSource: new Timeplot.ColumnSource(eventSourceO2pd,1),
+          timeGeometry: timeGeometry,
+          valueGeometry: valueGeometry,
+          lineColor: "#C7F464",
+          showValues: true
+        }),
+        Timeplot.createPlotInfo({
+            id: "four",
+            dataSource: new Timeplot.ColumnSource(eventSourceO2Pd,1),
+            timeGeometry: timeGeometry,
+            valueGeometry: valueGeometry,
+            lineColor: "#556270",
+            showValues: true
+          })
     ];
 
     timeplot = Timeplot.create(document.getElementById("my-timeplot"), plotInfo);
-    timeplot.loadText("data.txt", ",", eventSource);
+    if (core)
+    {
+        timeplot.loadText("data/" + target + "-Ospd-uncovered_percent.dat", ",", eventSourceOspd);
+        timeplot.loadText("data/" + target + "-OsPd-uncovered_percent.dat", ",", eventSourceOsPd);
+        timeplot.loadText("data/" + target + "-O2pd-uncovered_percent.dat", ",", eventSourceO2pd);
+        timeplot.loadText("data/" + target + "-O2Pd-uncovered_percent.dat", ",", eventSourceO2Pd);
+    }
+    if (development)
+    {
+        timeplot.loadText("data/" + target + "-OspD-uncovered_percent.dat", ",", eventSourceOspD);
+        timeplot.loadText("data/" + target + "-OsPD-uncovered_percent.dat", ",", eventSourceOsPD);
+        timeplot.loadText("data/" + target + "-O2pD-uncovered_percent.dat", ",", eventSourceO2pD);
+        timeplot.loadText("data/" + target + "-O2PD-uncovered_percent.dat", ",", eventSourceO2PD);
+    }
   }
 
   var resizeTimerID = null;
